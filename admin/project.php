@@ -74,7 +74,13 @@ require __DIR__ . '/../includes/header.php';
       <details class="settingsCard bulkTagPanel"><summary>写真にタグを一括追加</summary>
         <p class="accountHelp">タグを選んでから、下の写真を選択してください。既存タグを残して追加します。各写真の合計は最大10件です。1枚でも上限を超える場合は全件保存しません。</p>
         <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
-        <div class="tagList"><?php foreach ($tags as $tag): ?><label class="tagChoice" data-tag-reading="<?= h($tag['reading'] ?? '') ?>" style="<?= h(profileTagStyle($tag)) ?>"><input type="checkbox" name="bulk_tags[]" value="<?= (int)$tag['id'] ?>"><span>#<?= h($tag['name']) ?></span></label><?php endforeach; ?></div>
+        <?php
+          $tagPickerTags = $tags;
+          $tagPickerSelected = [];
+          $tagPickerInputName = 'bulk_tags[]';
+          $tagPickerLabelClass = 'tagChoice';
+          require __DIR__ . '/../includes/tag_picker.php';
+        ?>
         <div class="actionRow"><button class="button" type="button" data-select-photos>表示中の写真をすべて選択</button><button class="button primary" type="submit">選択した写真にタグを追加</button><span data-photo-selection role="status">0枚選択中</span></div>
       </details>
       <div class="managePhotoGrid">

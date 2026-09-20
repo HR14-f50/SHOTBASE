@@ -18,7 +18,23 @@ function ownedProject(int $id, int $userId): array
 
 function availableTags(int $userId): array
 {
-  $stmt = db()->prepare('SELECT * FROM tags WHERE user_id = ? OR user_id IS NULL ORDER BY name');
+  $stmt = db()->prepare('
+    SELECT t.*, teams.name AS team_name
+    FROM tags t
+    LEFT JOIN teams ON teams.id = t.team_id
+    WHERE t.user_id = ? OR t.user_id IS NULL
+    ORDER BY
+      CASE t.tag_type
+        WHEN "team" THEN 1
+        WHEN "division" THEN 2
+        WHEN "event" THEN 3
+        WHEN "player" THEN 4
+        ELSE 5
+      END,
+      teams.name,
+      t.category,
+      t.name
+  ');
   $stmt->execute([$userId]);
   return $stmt->fetchAll();
 }

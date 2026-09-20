@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/../includes/profile_helpers.php';
+require_once __DIR__ . '/../includes/admin_helpers.php';
 $userId = requirePhotographer();
 $projectId = (int)($_GET['project_id'] ?? 0);
 $stmt = db()->prepare('SELECT id, title FROM projects WHERE id = ? AND user_id = ?');
@@ -10,9 +10,7 @@ if (!$project) {
   http_response_code(404);
   exit('プロジェクトが見つかりません。');
 }
-$stmt = db()->prepare('SELECT * FROM tags WHERE user_id = ? OR user_id IS NULL ORDER BY name');
-$stmt->execute([$userId]);
-$tags = $stmt->fetchAll();
+$tags = availableTags($userId);
 $stmt = db()->prepare('SELECT tag_id FROM project_default_tags WHERE project_id = ?');
 $stmt->execute([$projectId]);
 $defaultTags = array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
@@ -56,14 +54,13 @@ require_once __DIR__ . '/../includes/header.php';
     <fieldset class="uploadTags" id="uploadTags">
       <legend>今回の写真すべてに付けるタグ</legend>
       <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
-      <div class="tagList" data-tag-list>
-        <?php foreach ($tags as $tag): ?>
-          <label class="uploadTagChoice" data-tag-reading="<?= h($tag['reading'] ?? '') ?>" style="<?= h(profileTagStyle($tag)) ?>">
-            <input type="checkbox" name="tag_ids[]" value="<?= (int)$tag['id'] ?>" <?= in_array((int)$tag['id'], $defaultTags, true) ? 'checked' : '' ?>>
-            <span class="tag" style="<?= h(profileTagStyle($tag)) ?>">#<?= h($tag['name']) ?></span>
-          </label>
-        <?php endforeach; ?>
-      </div>
+      <?php
+        $tagPickerTags = $tags;
+        $tagPickerSelected = $defaultTags;
+        $tagPickerInputName = 'tag_ids[]';
+        $tagPickerLabelClass = 'uploadTagChoice';
+        require __DIR__ . '/../includes/tag_picker.php';
+      ?>
       <?php if (!$tags): ?><p class="muted">タグは写真の編集画面でも追加できます。</p><?php endif; ?>
       <?php require __DIR__ . '/../includes/tag_create_ui.php'; ?>
     </fieldset>

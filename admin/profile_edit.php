@@ -9,9 +9,7 @@ $stmt->execute([$userId]);
 $saved = $stmt->fetch();
 $user = $saved;
 $photographer = $saved['user_type'] === 'photographer';
-$stmt = $pdo->prepare('SELECT * FROM tags WHERE user_id = ? OR user_id IS NULL ORDER BY name');
-$stmt->execute([$userId]);
-$tags = $stmt->fetchAll();
+$tags = availableTags($userId);
 $stmt = $pdo->prepare('SELECT tag_id FROM user_profile_tags WHERE user_id = ? ORDER BY sort_order');
 $stmt->execute([$userId]);
 $selectedTags = array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
@@ -183,9 +181,14 @@ $message = flash('profile_saved');
       <h2>プロフィールのタグ</h2>
       <p class="accountHelp">合計10個まで選べます。<?= !$photographer ? '閲覧限定会員のタグはアカウント画面に表示され、公開プロフィールは作成されません。' : '' ?></p>
       <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
-      <div class="tagList">
-        <?php foreach ($tags as $tag): ?><label class="profileTagChoice" data-tag-reading="<?= h($tag['reading'] ?? '') ?>" style="<?= h(profileTagStyle($tag)) ?>"><input type="checkbox" name="profile_tags[]" value="<?= (int)$tag['id'] ?>" <?= in_array((int)$tag['id'], $selectedTags, true) ? 'checked' : '' ?>><span class="tag" style="<?= h(profileTagStyle($tag)) ?>">#<?= h($tag['name']) ?></span></label><?php endforeach; ?>
-      </div>
+      <?php
+        $tagPickerTags = $tags;
+        $tagPickerSelected = $selectedTags;
+        $tagPickerInputName = 'profile_tags[]';
+        $tagPickerLabelClass = 'profileTagChoice';
+        require __DIR__ . '/../includes/tag_picker.php';
+      ?>
+      <h3 class="tagCreateHeading">タグを作成する</h3>
       <label>新しいタグ<input name="new_tags" value="<?= h($newTags) ?>" maxlength="1000" placeholder="例：球場巡り、ナイター"></label>
       <p class="accountHelp">複数のタグは「、」または「,」で区切ってください。</p>
     </section>

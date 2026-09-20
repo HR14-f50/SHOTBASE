@@ -15,23 +15,7 @@ $errors = [];
 // タグ取得
 // -------------------------------------
 
-$stmt = db()->prepare('
-  SELECT
-    id,
-    name,
-    tag_type,
-    reading,
-    border_color,
-    background_color
-  FROM tags
-  WHERE user_id = ?
-    OR user_id IS NULL
-  ORDER BY name ASC
-');
-
-$stmt->execute([$userId]);
-
-$tags = $stmt->fetchAll();
+$tags = availableTags($userId);
 
 // -------------------------------------
 // 初期値
@@ -681,51 +665,16 @@ require_once __DIR__ . '/../includes/header.php';
       </p>
 
       <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
-
-      <?php if ($tags): ?>
-
-        <div class="tagCheckboxList" data-tag-list data-tag-delete="<?= BASE_URL ?>/admin/tag_delete.php" data-tag-input-name="default_tag_ids[]">
-
-          <?php foreach ($tags as $tag): ?>
-
-            <span class="tagManageItem">
-              <label
-                class="tagCheckboxItem"
-                data-tag-reading="<?= h($tag['reading'] ?? '') ?>"
-                style="<?= h(profileTagStyle($tag)) ?>"
-              >
-
-              <input
-                type="checkbox"
-                name="default_tag_ids[]"
-                value="<?= (int)$tag['id'] ?>"
-                <?= in_array(
-                  (int)$tag['id'],
-                  $selectedDefaultTagIds,
-                  true
-                )
-                  ? 'checked'
-                  : '' ?>
-              >
-
-              #<?= h($tag['name']) ?>
-
-              </label>
-              <?php if (in_array((int)$tag['id'], $_SESSION['tag_edit_sessions'][$editToken]['created'], true)): ?><button type="button" class="tagDeleteButton" data-delete-tag="<?= (int)$tag['id'] ?>" data-tag-name="<?= h($tag['name']) ?>" aria-label="<?= h($tag['name']) ?>を登録タグから削除">×</button><?php endif; ?>
-            </span>
-
-          <?php endforeach; ?>
-
-        </div>
-
-      <?php else: ?>
-
-        <p class="notice">
-          登録されているタグはありません。
-        </p>
-        <div class="tagCheckboxList" data-tag-list data-tag-delete="<?= BASE_URL ?>/admin/tag_delete.php" data-tag-input-name="default_tag_ids[]"></div>
-
-      <?php endif; ?>
+      <?php if (!$tags): ?><p class="notice">登録されているタグはありません。</p><?php endif; ?>
+      <?php
+        $tagPickerTags = $tags;
+        $tagPickerSelected = $selectedDefaultTagIds;
+        $tagPickerInputName = 'default_tag_ids[]';
+        $tagPickerLabelClass = 'tagCheckboxItem';
+        $tagPickerDeleteUrl = BASE_URL . '/admin/tag_delete.php';
+        $tagPickerCreatedIds = $_SESSION['tag_edit_sessions'][$editToken]['created'] ?? [];
+        require __DIR__ . '/../includes/tag_picker.php';
+      ?>
       <?php $tagInputName = 'default_tag_ids[]'; require __DIR__ . '/../includes/tag_create_ui.php'; ?>
 
     </fieldset>

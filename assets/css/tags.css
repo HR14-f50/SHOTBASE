@@ -166,6 +166,65 @@
   min-height: 1.2em;
   margin: 0;
 }
+.tagPickerAccordion {
+  margin: 12px 0;
+  border: 1px solid var(--tag-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .58);
+}
+.tagPickerAccordion > summary {
+  cursor: pointer;
+  padding: 12px 14px;
+  font-weight: 700;
+  list-style-position: inside;
+}
+.tagPickerBody {
+  padding: 0 14px 14px;
+}
+.tagPickerList {
+  display: grid;
+  gap: 16px;
+}
+.tagPickerGroup {
+  display: grid;
+  gap: 8px;
+}
+.tagPickerGroup > h3,
+.tagPickerGroup > h4,
+.tagPickerCategory > h5 {
+  margin: 0;
+}
+.tagPickerGroup > h3 {
+  font-size: 14px;
+  color: var(--text-main, #273746);
+}
+.tagPickerGroup > h4 {
+  margin-top: 2px;
+  font-size: 13px;
+  color: var(--text-muted, #687582);
+}
+.tagPickerCategory {
+  display: grid;
+  gap: 6px;
+}
+.tagPickerCategory > h5 {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted, #687582);
+}
+.tagPickerGroup .tagList {
+  align-items: stretch;
+}
+.tagCreateArea {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tag-border);
+}
+.tagCreateArea h3,
+.tagCreateHeading {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
 .popularTagList {
   display: flex;
   flex-wrap: wrap;
