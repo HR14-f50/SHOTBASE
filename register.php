@@ -11,6 +11,7 @@ if (isset($_SESSION['signup']) && $_SESSION['signup']['updated'] < time() - 3600
 $_SESSION['signup'] ??= ['step' => 1, 'user_type' => 'photographer', 'username' => '', 'nickname' => '',
   'password_hash' => '', 'bio' => '', 'theme_key' => 'white', 'preset_icon' => 'ball', 'icon_path' => '', 'updated' => time()];
 $draft = &$_SESSION['signup'];
+$draft['theme_key'] = normalizeProfileThemeKey($draft['theme_key'] ?? 'white');
 $draft['icon_motif'] ??= 'ball';
 $draft['icon_color'] ??= 'blue';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -192,7 +193,7 @@ require_once __DIR__ . '/includes/header.php';
           <dt>ニックネーム</dt><dd><?= h($draft['nickname']) ?></dd>
           <dt>パスワード</dt><dd>設定済み（表示しません）</dd>
           <?php if ($photographer): ?>
-            <dt>テーマカラー</dt><dd><?= h(profileThemes()[$draft['theme_key']]['name']) ?></dd>
+            <dt>テーマカラー</dt><dd><?= h(profileTheme($draft['theme_key'])['name']) ?></dd>
             <dt>自己紹介</dt><dd><?= $draft['bio'] ? nl2br(h($draft['bio'])) : '未設定' ?></dd>
           <?php else: ?>
             <dt>公開プロフィール</dt><dd>作成しない</dd>

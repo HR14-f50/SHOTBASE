@@ -42,6 +42,44 @@
 .personalTheme .profileSectionHeading h2 { color: var(--profile-accent); }
 .personalTheme .button.primary { background: var(--profile-accent); border-color: var(--profile-accent); color: #fff; }
 .personalTheme .profileAvatar { background: var(--profile-accent); }
+.personalTheme.theme-dark {
+  --bg: #11161c;
+  --text: #edf2f7;
+  --muted: #aab6c2;
+  --line: #37424e;
+  --card: #1b232c;
+  color: var(--text);
+  background: var(--bg);
+}
+.personalTheme.theme-dark .siteHeader {
+  background: rgba(24, 31, 39, .97);
+  border-color: var(--line);
+}
+.personalTheme.theme-dark .profileAreaB,
+.personalTheme.theme-dark .settingsCard {
+  border-color: var(--line);
+  color: var(--text);
+}
+.personalTheme.theme-dark .profileAreaB { background-color: var(--profile-soft); }
+.personalTheme.theme-dark .settingsCard { background-color: var(--profile-soft); }
+.personalTheme.theme-dark .profileSectionHeading > span,
+.personalTheme.theme-dark .accountHelp,
+.personalTheme.theme-dark .muted,
+.personalTheme.theme-dark .tagUseCount,
+.personalTheme.theme-dark .profileEmpty p { color: var(--muted); }
+.personalTheme.theme-dark input:not([type="radio"]):not([type="checkbox"]):not([type="file"]),
+.personalTheme.theme-dark textarea,
+.personalTheme.theme-dark select {
+  color: var(--text);
+  background: #222c36;
+  border-color: #4a5866;
+}
+.personalTheme.theme-dark .fixedFieldValue { color: var(--text); background: #222c36; border-color: #4a5866; }
+.personalTheme.theme-dark .button:not(.primary) { color: var(--text); background: #222c36; border-color: #5a6876; }
+.personalTheme.theme-dark .profileProjectRow,
+.personalTheme.theme-dark .profileAreaB { border-color: var(--line); }
+.personalTheme.theme-dark .profileEmpty,
+.personalTheme.theme-dark .profileFilterStatus { background: #1b232c; border-color: var(--line); }
 .themeSwatches { display: flex; flex-wrap: wrap; gap: 16px; }
 .themeSwatches label { position: relative; display: grid; justify-items: center; gap: 6px; cursor: pointer; min-width: 66px; }
 .themeSwatches input { position: absolute; opacity: 0; width: 1px; height: 1px; }

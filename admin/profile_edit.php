@@ -7,6 +7,7 @@ $pdo = db();
 $stmt = $pdo->prepare('SELECT * FROM users WHERE id = ?');
 $stmt->execute([$userId]);
 $saved = $stmt->fetch();
+$saved['theme_key'] = normalizeProfileThemeKey($saved['theme_key'] ?? 'white');
 $user = $saved;
 $photographer = $saved['user_type'] === 'photographer';
 $tags = availableTags($userId);

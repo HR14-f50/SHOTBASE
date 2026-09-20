@@ -7,10 +7,12 @@ require_once __DIR__ . '/functions.php';
 
 require_once __DIR__ . '/theme_palette.php';
 $personalTheme = null;
+$personalThemeKey = null;
 if (isset($themeUserId)) {
   $themeStmt = db()->prepare('SELECT theme_key FROM users WHERE id = ?');
   $themeStmt->execute([$themeUserId]);
-  $personalTheme = profileThemes()[$themeStmt->fetchColumn()] ?? profileThemes()['white'];
+  $personalThemeKey = normalizeProfileThemeKey($themeStmt->fetchColumn());
+  $personalTheme = profileThemes()[$personalThemeKey];
 }
 $pageTitle = $pageTitle ?? SERVICE_NAME;
 ?>
@@ -30,7 +32,7 @@ $pageTitle = $pageTitle ?? SERVICE_NAME;
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/sidebar-refresh.css?v=<?= (int) @filemtime(__DIR__ . '/../assets/css/sidebar-refresh.css') ?>">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/project-refresh.css?v=<?= (int) @filemtime(__DIR__ . '/../assets/css/project-refresh.css') ?>">
 </head>
-<body class="<?= h($pageClass ?? '') ?> <?= $personalTheme ? 'personalTheme' : '' ?>" <?= $personalTheme ? 'style="--profile-accent:' . h($personalTheme['accent']) . ';--profile-soft:' . h($personalTheme['soft']) . ';"' : '' ?>>
+<body class="<?= h($pageClass ?? '') ?> <?= $personalTheme ? 'personalTheme theme-' . h($personalThemeKey) : '' ?>" <?= $personalTheme ? 'style="--profile-accent:' . h($personalTheme['accent']) . ';--profile-soft:' . h($personalTheme['soft']) . ';"' : '' ?>>
 <a class="skipLink" href="#mainContent">本文へスキップ</a>
 <div class="headerReveal">
 <header class="siteHeader">

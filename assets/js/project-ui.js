@@ -43,6 +43,8 @@ if (picker) {
   let pending = null;
   let busy = false;
   const apply = (choice) => {
+    picker.querySelectorAll('[name="theme_key"]').forEach((theme) => document.body.classList.remove(`theme-${theme.value}`));
+    document.body.classList.add(`theme-${choice.value}`);
     document.body.style.setProperty('--profile-accent', choice.dataset.accent);
     document.body.style.setProperty('--profile-soft', choice.dataset.soft);
   };

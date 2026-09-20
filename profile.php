@@ -190,7 +190,7 @@ $stmt->execute(array_merge([currentUserId() ?? 0], $params));
 $projects = $stmt->fetchAll();
 $pageTitle = $user['nickname'] . 'の写真';
 $pageClass = 'publicProfilePage';
-$profileTheme = profileThemes()[$user['theme_key']] ?? profileThemes()['white'];
+$profileTheme = profileTheme($user['theme_key']);
 $fullWidth = true;
 $themeUserId = $userId;
 require_once __DIR__ . '/includes/header.php';
