@@ -9,12 +9,13 @@ $tagPickerEditToken = $tagPickerEditToken ?? '';
 $tagPickerGroups = [
   'team' => ['label' => 'チームを選ぶ', 'tags' => []],
   'league' => ['label' => 'リーグ・大会を選ぶ', 'tags' => []],
+  'stadium' => ['label' => '球場を選ぶ', 'tags' => []],
   'players' => ['label' => '選手を選ぶ', 'tags' => []],
   'custom' => ['label' => 'その他のタグを選ぶ', 'tags' => []],
 ];
 foreach ($tagPickerTags as $tag) {
   $type = $tag['tag_type'] ?? 'custom';
-  $group = $type === 'team' ? 'team' : (in_array($type, ['division', 'event'], true) ? 'league' : ($type === 'player' ? 'players' : 'custom'));
+  $group = $type === 'team' ? 'team' : (in_array($type, ['division', 'event'], true) ? 'league' : ($type === 'stadium' ? 'stadium' : ($type === 'player' ? 'players' : 'custom')));
   $tagPickerGroups[$group]['tags'][] = $tag;
 }
 $tagPickerCategoryLabels = [

@@ -26,7 +26,7 @@ function profileTagStyle(array $tag): string
   $colors = $palette[$type] ?? $palette['other'];
   $teamBackground = (string)($tag['background_color'] ?? $tag['team_background_color'] ?? '');
   $teamBorder = (string)($tag['border_color'] ?? $tag['team_border_color'] ?? '');
-  $useTeamColors = in_array($type, ['team', 'player'], true)
+  $useTeamColors = in_array($type, ['team', 'player', 'stadium'], true)
     && preg_match('/^#[0-9a-f]{6}$/i', $teamBackground)
     && preg_match('/^#[0-9a-f]{6}$/i', $teamBorder);
   if ($useTeamColors) {
@@ -39,12 +39,14 @@ function profileTagStyle(array $tag): string
     ];
   }
   $isOperatorLeagueTag = in_array($type, ['division', 'event'], true) && ($tag['user_id'] ?? null) === null;
-  if ($isOperatorLeagueTag) {
+  $isNeutralStadiumTag = $type === 'stadium' && ($tag['user_id'] ?? null) === null && empty($tag['team_id']);
+  if ($isOperatorLeagueTag || $isNeutralStadiumTag) {
     $name = (string)($tag['name'] ?? '');
     $colors = match (true) {
       $name === 'セリーグ' => ['bg' => '#e5f5ea', 'fg' => '#266f43', 'border' => '#4da66b', 'selected' => '#2f8b55', 'selected_text' => '#ffffff'],
       $name === 'パリーグ' => ['bg' => '#e6f4fb', 'fg' => '#24627d', 'border' => '#55a8c9', 'selected' => '#3287ad', 'selected_text' => '#ffffff'],
       $type === 'division' => ['bg' => '#fff4d9', 'fg' => '#76520e', 'border' => '#d6a83f', 'selected' => '#b98216', 'selected_text' => '#ffffff'],
+      $isNeutralStadiumTag => ['bg' => '#f0f2f4', 'fg' => '#59636d', 'border' => '#8a949e', 'selected' => '#68747f', 'selected_text' => '#ffffff'],
       default => ['bg' => '#f0eafb', 'fg' => '#5f438d', 'border' => '#9271c7', 'selected' => '#7654ad', 'selected_text' => '#ffffff'],
     };
   }
@@ -52,8 +54,8 @@ function profileTagStyle(array $tag): string
   foreach (['bg', 'fg', 'border', 'selected', 'selected_text'] as $name) {
     $value = $colors[$name] ?? $palette['other'][$name];
     if (!preg_match('/^#[0-9a-f]{6}$/i', $value)) $value = $palette['other'][$name];
-    if (!$useTeamColors && !$isOperatorLeagueTag && $name === 'bg') $value = 'var(--profile-soft, ' . $value . ')';
-    if (!$useTeamColors && !$isOperatorLeagueTag && ($name === 'fg' || $name === 'selected')) $value = 'var(--profile-accent, ' . $value . ')';
+    if (!$useTeamColors && !$isOperatorLeagueTag && !$isNeutralStadiumTag && $name === 'bg') $value = 'var(--profile-soft, ' . $value . ')';
+    if (!$useTeamColors && !$isOperatorLeagueTag && !$isNeutralStadiumTag && ($name === 'fg' || $name === 'selected')) $value = 'var(--profile-accent, ' . $value . ')';
     $result .= '--tag-' . str_replace('_', '-', $name) . ':' . $value . ';';
   }
   return $result;

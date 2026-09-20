@@ -90,7 +90,6 @@ JOIN (
   SELECT '山口 航輝', 'outfielder', 'やまぐち こうき', '51' UNION ALL
   SELECT '山本 大斗', 'outfielder', 'やまもと だいと', '61' UNION ALL
   SELECT '和田 康士朗', 'outfielder', 'わだ こうしろう', '63' UNION ALL
-  SELECT 'HARUTO', 'outfielder', 'はると', '100' UNION ALL
   SELECT '杉山 諒', 'outfielder', 'すぎやま りょう', '128' UNION ALL
   SELECT '髙野 光海', 'outfielder', 'こうの ひかる', '135' UNION ALL
   SELECT '藤田 和樹', 'outfielder', 'ふじた かずき', '136' UNION ALL
