@@ -181,19 +181,9 @@
   display: grid;
   gap: 8px;
 }
-.tagPickerGroup-league,
-.tagPickerGroup-stadium,
-.tagPickerGroup-user,
-.tagPickerGroup-other {
-  padding: 12px;
-  border: 1px solid var(--tag-border);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .42);
-}
 .tagPickerGroup > h3,
 .tagPickerGroup > h4,
-.tagPickerCategory > h5,
-.tagPickerCategory > h6 {
+.tagPickerCategory > h5 {
   margin: 0;
 }
 .tagPickerGroup > h3 {
@@ -214,11 +204,6 @@
   font-weight: 600;
   color: var(--text-muted, #687582);
 }
-.tagPickerCategory > h6 {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted, #687582);
-}
 .tagPickerGroup .tagList {
   align-items: stretch;
 }
@@ -230,37 +215,13 @@
 .tagPickerTeamList {
   align-items: stretch;
 }
-.tagPickerTeamTables {
+.tagPickerPlayerTeams {
   display: grid;
   gap: 14px;
-}
-.tagPickerTeamTable {
-  display: grid;
-  gap: 9px;
-  padding: 12px;
-  border: 1px solid var(--tag-border);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, .52);
-}
-.tagPickerTeamTable > h4 {
-  margin: 0;
-  font-size: 14px;
-  color: var(--text-main, #273746);
-}
-.tagPickerTeamTable > .tagList {
-  padding-bottom: 2px;
 }
 .tagPickerPlayerTeam {
   display: grid;
   gap: 8px;
-  margin-top: 2px;
-  padding-top: 10px;
-  border-top: 1px solid var(--tag-border);
-}
-.tagPickerPlayerTeam > h5 {
-  margin: 0;
-  font-size: 12px;
-  color: var(--text-muted, #687582);
 }
 .tagPickerPlayerTeam[hidden] {
   display: none;
