@@ -37,7 +37,11 @@
 .profileNameBlock h2 { font-size: 19px; line-height: 1.4; margin: 0 0 5px; overflow-wrap: anywhere; }
 .profileNameBlock h2 a { color: inherit; text-decoration: none; }
 .profileAreaB .profileEditButton,
-.profileAreaB .profileGuestButton { margin: 0; width: 100%; text-align: center; }
+.profileAreaB .profileGuestButton {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
 .profileBio { white-space: nowrap; overflow-x: auto; overflow-wrap: normal; max-width: 100%; }
 .profileStats { gap: 12px; flex-wrap: wrap; }
 .pickupSlider { position: relative; }
@@ -91,7 +95,7 @@
   .profileAreaB .profileAreaA { margin-bottom: 14px; }
   .profileAreaB .profileIdentity { align-items: center; }
   .profileAreaB .profileNameBlock { flex: 1 1 0; min-width: 0; }
-  .profileAreaB .profileEditButton,
+  .profileAreaB .profileEditButton { width: auto; margin: 0 0 0 auto; }
   .profileAreaB .profileGuestButton { width: auto; }
   .pickupGallery { height: 150px; }
   .publicDetailLayout .photoDetailImage img { max-height: 85vh; }
