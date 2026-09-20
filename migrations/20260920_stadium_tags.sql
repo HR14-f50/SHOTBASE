@@ -10,7 +10,6 @@ WHERE user_id IS NULL
   AND name = 'HARUTO'
   AND team_id = (SELECT id FROM teams WHERE slug = 'marines' LIMIT 1)
   AND NOT EXISTS (SELECT 1 FROM photo_tags WHERE tag_id = tags.id)
-  AND NOT EXISTS (SELECT 1 FROM user_profile_tags WHERE tag_id = tags.id)
   AND NOT EXISTS (SELECT 1 FROM project_default_tags WHERE tag_id = tags.id);
 
 UPDATE tags

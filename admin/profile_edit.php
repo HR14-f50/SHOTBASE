@@ -10,14 +10,9 @@ $saved = $stmt->fetch();
 $saved['theme_key'] = normalizeProfileThemeKey($saved['theme_key'] ?? 'white');
 $user = $saved;
 $photographer = $saved['user_type'] === 'photographer';
-$tags = availableTags($userId);
-$stmt = $pdo->prepare('SELECT tag_id FROM user_profile_tags WHERE user_id = ? ORDER BY sort_order');
-$stmt->execute([$userId]);
-$selectedTags = array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
 $source = $photographer ? 'keep' : 'custom';
 $cropX = 50;
 $cropY = 50;
-$newTags = '';
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!profileCsrfValid()) {
@@ -70,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$stmt->fetchColumn()) {
       $errors[] = '削除できるタグが見つかりません。';
     } else {
-      // タグを削除すると、写真・プロジェクト・プロフィールに付けた同タグも一緒に外れます。
+      // タグを削除すると、写真・プロジェクトに付けた同タグも一緒に外れます。
       $pdo->prepare('DELETE FROM tags WHERE id = ? AND user_id = ? AND tag_type = "custom"')->execute([$tagId, $userId]);
       flash('tag_management', 'タグと、そのタグの付与先を削除しました。');
       redirect('admin/profile_edit.php#tag-management');
@@ -84,17 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $source = $photographer ? (string)($_POST['icon_source'] ?? 'keep') : 'custom';
     $user['icon_motif'] = (string)($_POST['icon_motif'] ?? $saved['icon_motif']);
     $user['icon_color'] = (string)($_POST['icon_color'] ?? $saved['icon_color']);
-    $selectedTags = array_values(array_unique(array_map('intval', (array)($_POST['profile_tags'] ?? []))));
-    $newTags = trim((string)($_POST['new_tags'] ?? ''));
-    $newNames = array_values(array_unique(array_filter(array_map('trim', preg_split('/[,、\r\n]+/u', $newTags)))));
     if ($user['nickname'] === '' || mb_strlen($user['nickname']) > 20) $errors[] = 'ニックネームは1〜20文字で入力してください。';
     if (!in_array($source, ['keep', 'custom', 'upload'], true)) $errors[] = 'アイコンの設定方法を選択してください。';
     if ($source === 'custom' && !isset(iconMotifs()[$user['icon_motif']], iconColors()[$user['icon_color']])) $errors[] = 'アイコンの素材と背景色を選択してください。';
-    if (count($selectedTags) + count($newNames) > 10) $errors[] = 'タグは合計10個まで選べます。';
-    if (array_diff($selectedTags, array_map('intval', array_column($tags, 'id')))) $errors[] = '選択できないタグが含まれています。';
-    foreach ($newNames as $name) {
-      if (mb_strlen($name) > 12) $errors[] = 'タグ名は12文字以内で入力してください。';
-    }
     if ($photographer) {
       $user['bio'] = trim((string)($_POST['bio'] ?? ''));
       $user['theme_key'] = (string)($_POST['theme_key'] ?? $saved['theme_key']);
@@ -143,19 +130,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($photographer) $fields = array_merge($fields, ['bio', 'theme_key', 'watermark_enabled', 'watermark_source', 'watermark_text', 'watermark_size', 'watermark_color', 'watermark_opacity', 'watermark_position']);
         $stmt = $pdo->prepare('UPDATE users SET ' . implode(', ', array_map(fn($field) => "$field = ?", $fields)) . ' WHERE id = ?');
         $stmt->execute(array_merge(array_map(fn($field) => $user[$field], $fields), [$userId]));
-        foreach ($newNames as $name) {
-          $stmt = $pdo->prepare('SELECT id FROM tags WHERE name = ? AND user_id = ? LIMIT 1');
-          $stmt->execute([$name, $userId]);
-          $tag = $stmt->fetchColumn();
-          if (!$tag) {
-            $pdo->prepare('INSERT INTO tags (user_id, name, tag_type) VALUES (?, ?, "custom")')->execute([$userId, $name]);
-            $tag = $pdo->lastInsertId();
-          }
-          $selectedTags[] = (int)$tag;
-        }
-        $pdo->prepare('DELETE FROM user_profile_tags WHERE user_id = ?')->execute([$userId]);
-        $stmt = $pdo->prepare('INSERT INTO user_profile_tags (user_id, tag_id, sort_order) VALUES (?, ?, ?)');
-        foreach (array_values(array_unique($selectedTags)) as $order => $tag) $stmt->execute([$userId, $tag, $order]);
         commitWatermarkRows($pdo, $staged, $userId);
         $pdo->commit();
         discardWatermarkFiles($staged, true);
@@ -180,10 +154,9 @@ $message = flash('profile_saved');
 $tagMessage = flash('tag_management');
 $stmt = $pdo->prepare('SELECT t.id, t.name, t.created_at,
   (SELECT COUNT(*) FROM photo_tags pt JOIN photos ph ON ph.id = pt.photo_id WHERE pt.tag_id = t.id AND ph.user_id = ?) AS photo_use_count,
-  (SELECT COUNT(*) FROM project_default_tags pdt JOIN projects p ON p.id = pdt.project_id WHERE pdt.tag_id = t.id AND p.user_id = ?) AS project_use_count,
-  (SELECT COUNT(*) FROM user_profile_tags upt WHERE upt.tag_id = t.id AND upt.user_id = ?) AS profile_use_count
+  (SELECT COUNT(*) FROM project_default_tags pdt JOIN projects p ON p.id = pdt.project_id WHERE pdt.tag_id = t.id AND p.user_id = ?) AS project_use_count
   FROM tags t WHERE t.user_id = ? AND t.tag_type = "custom" ORDER BY t.name');
-$stmt->execute([$userId, $userId, $userId, $userId]);
+$stmt->execute([$userId, $userId, $userId]);
 $ownedTags = $stmt->fetchAll();
 ?>
 <section class="settingsShell">
@@ -240,19 +213,6 @@ $ownedTags = $stmt->fetchAll();
         </fieldset>
       <?php endif; ?>
     </section>
-    <section class="settingsCard formStack">
-      <h2>プロフィールのタグ</h2>
-      <p class="accountHelp">合計10個まで選べます。<?= !$photographer ? '閲覧限定会員のタグはアカウント画面に表示され、公開プロフィールは作成されません。' : '' ?></p>
-      <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
-      <?php
-        $tagPickerTags = $tags;
-        $tagPickerSelected = $selectedTags;
-        $tagPickerInputName = 'profile_tags[]';
-        $tagPickerLabelClass = 'profileTagChoice';
-        require __DIR__ . '/../includes/tag_picker.php';
-      ?>
-      <?php $tagInputName = 'profile_tags[]'; require __DIR__ . '/../includes/tag_create_ui.php'; ?>
-    </section>
     <?php if ($photographer): ?>
       <section class="settingsCard formStack">
         <h2>ウォーターマーク</h2>
@@ -285,7 +245,7 @@ $ownedTags = $stmt->fetchAll();
   </form>
   <section class="settingsCard tagManagementCard" id="tag-management">
     <h2>自分で作ったタグを管理</h2>
-    <p class="accountHelp">ここで作ったタグは、あなたの写真・プロジェクト・プロフィールで使えます。名前を変更すると、すでに付けた場所にも反映されます。</p>
+    <p class="accountHelp">ここで作ったタグは、あなたの写真・プロジェクトで使えます。名前を変更すると、すでに付けた場所にも反映されます。</p>
     <form method="post" class="tagManagementCreate formStack">
       <input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>">
       <input type="hidden" name="action" value="tag_create_manage">
@@ -298,7 +258,7 @@ $ownedTags = $stmt->fetchAll();
     <?php else: ?>
       <div class="tagManagementList">
         <?php foreach ($ownedTags as $tag): ?>
-          <?php $useCount = (int)$tag['photo_use_count'] + (int)$tag['project_use_count'] + (int)$tag['profile_use_count']; ?>
+          <?php $useCount = (int)$tag['photo_use_count'] + (int)$tag['project_use_count']; ?>
           <article class="tagManagementRow">
             <form method="post" class="tagManagementEdit">
               <input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>">
@@ -307,7 +267,7 @@ $ownedTags = $stmt->fetchAll();
               <label><span class="srOnly">タグ名</span><input name="tag_name" maxlength="12" required value="<?= h($tag['name']) ?>"></label>
               <button class="button" type="submit">修正</button>
             </form>
-            <div class="tagManagementMeta"><span><?= $useCount ? '使用中：' . $useCount . 'か所' : '未使用' ?></span><form method="post" data-confirm="「<?= h($tag['name']) ?>」と、そのタグを付けた写真・プロジェクト・プロフィール情報を削除しますか？この操作は取り消せません。"><input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>"><input type="hidden" name="action" value="tag_delete_manage"><input type="hidden" name="tag_id" value="<?= (int)$tag['id'] ?>"><button class="button danger" type="submit">削除</button></form></div>
+            <div class="tagManagementMeta"><span><?= $useCount ? '使用中：' . $useCount . 'か所' : '未使用' ?></span><form method="post" data-confirm="「<?= h($tag['name']) ?>」と、そのタグを付けた写真・プロジェクト情報を削除しますか？この操作は取り消せません。"><input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>"><input type="hidden" name="action" value="tag_delete_manage"><input type="hidden" name="tag_id" value="<?= (int)$tag['id'] ?>"><button class="button danger" type="submit">削除</button></form></div>
           </article>
         <?php endforeach; ?>
       </div>

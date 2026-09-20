@@ -13,8 +13,7 @@
   .tagChoice,
   .tagCheckbox,
   .tagCheckboxItem,
-  .uploadTagChoice,
-  .profileTagChoice
+  .uploadTagChoice
 ) {
   display: inline-flex;
   align-items: center;
@@ -38,8 +37,7 @@
   .tagChoice,
   .tagCheckbox,
   .tagCheckboxItem,
-  .uploadTagChoice,
-  .profileTagChoice
+  .uploadTagChoice
 ) {
   position: relative;
   cursor: pointer;
@@ -49,8 +47,7 @@
     .tagChoice,
     .tagCheckbox,
     .tagCheckboxItem,
-    .uploadTagChoice,
-    .profileTagChoice
+    .uploadTagChoice
   ) {
   display: inline-flex;
   gap: 6px;
@@ -59,8 +56,7 @@
     .tagChoice,
     .tagCheckbox,
     .tagCheckboxItem,
-    .uploadTagChoice,
-    .profileTagChoice
+    .uploadTagChoice
   )
   > input[type="checkbox"] {
   position: absolute;
@@ -77,8 +73,7 @@
     .tagChoice,
     .tagCheckbox,
     .tagCheckboxItem,
-    .uploadTagChoice,
-    .profileTagChoice
+    .uploadTagChoice
   )
   > .tag {
   padding: 0;
@@ -91,8 +86,7 @@
   .tagChoice,
   .tagCheckbox,
   .tagCheckboxItem,
-  .uploadTagChoice,
-  .profileTagChoice
+  .uploadTagChoice
 ):has(input:checked),
 :is(.projectTag.is-active, .tag.isActive),
 .popularTagList .isActive .tag {
@@ -104,8 +98,7 @@
   .tagChoice,
   .tagCheckbox,
   .tagCheckboxItem,
-  .uploadTagChoice,
-  .profileTagChoice
+  .uploadTagChoice
 ):has(input:focus-visible),
 :is(.tag, .photoTag, .projectTag):focus-visible {
   outline: 3px solid #8bafcf;
@@ -115,8 +108,7 @@
   .tagChoice,
   .tagCheckbox,
   .tagCheckboxItem,
-  .uploadTagChoice,
-  .profileTagChoice
+  .uploadTagChoice
 ):has(input:disabled) {
   opacity: 0.5;
   cursor: default;

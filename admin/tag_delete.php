@@ -17,7 +17,7 @@ if (!$context || !in_array($tagId, $context['created'], true)) {
   exit;
 }
 try {
-  $stmt = db()->prepare('DELETE FROM tags WHERE id = ? AND user_id = ? AND NOT EXISTS (SELECT 1 FROM photo_tags WHERE tag_id = tags.id) AND NOT EXISTS (SELECT 1 FROM user_profile_tags WHERE tag_id = tags.id) AND NOT EXISTS (SELECT 1 FROM project_default_tags WHERE tag_id = tags.id)');
+  $stmt = db()->prepare('DELETE FROM tags WHERE id = ? AND user_id = ? AND NOT EXISTS (SELECT 1 FROM photo_tags WHERE tag_id = tags.id) AND NOT EXISTS (SELECT 1 FROM project_default_tags WHERE tag_id = tags.id)');
   $stmt->execute([$tagId, $userId]);
   if (!$stmt->rowCount()) {
     http_response_code(404);

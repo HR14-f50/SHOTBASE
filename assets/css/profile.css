@@ -334,12 +334,6 @@
   margin: 22px 0 12px;
   overflow-wrap: anywhere;
 }
-.profileTagList {
-  margin: 14px 0;
-}
-.profileTagList .tag {
-  font-size: 12px;
-}
 .profileStats {
   display: flex;
   gap: 24px;
@@ -691,13 +685,6 @@
 .profileSettingsGroup .tagList {
   margin: 20px 0;
 }
-.profileTagChoice {
-  display: flex !important;
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-}
-.profileTagChoice input,
 .featuredPhotoChoices input {
   width: auto;
 }
