@@ -45,7 +45,7 @@
 .themeSwatches { display: flex; flex-wrap: wrap; gap: 16px; }
 .themeSwatches label { position: relative; display: grid; justify-items: center; gap: 6px; cursor: pointer; min-width: 66px; }
 .themeSwatches input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.themeSwatches span { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 3px solid #fff; box-shadow: 0 0 0 1px #b5bdc5; }
+.themeSwatches span { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 3px solid #fff; background: linear-gradient(135deg, var(--swatch-primary) 0 62%, var(--swatch-secondary) 62% 100%); box-shadow: 0 0 0 1px #b5bdc5; }
 .themeSwatches input:checked + span { outline: 3px solid var(--profile-accent); outline-offset: 3px; }
 .themeSwatches input:checked + span::after { content: ''; color: #fff; }
 .themeSwatches input:focus-visible + span { outline: 3px solid #111; outline-offset: 3px; }
