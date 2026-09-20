@@ -107,5 +107,5 @@
 最新のプロジェクト管理・タグ制限・テーマ仕様は [管理・検索更新ガイド](docs/project-refresh.md) を参照してください。
 
 ## 運営タグとタグ検索（2026-09-20）
-チーム・区分・大会・ファイターズ選手の初期タグは `migrations/20260920_operator_tags.sql`、選手のふりがなは `migrations/20260920_fighters_readings.sql`、所属チームと守備位置カテゴリは `migrations/20260920_fighters_categories.sql`、背番号は `migrations/20260920_fighters_uniform_numbers.sql` にまとめています。適用方法とチームカラー・リーグカラーの変更箇所は [運営タグガイド](docs/operator-tags.md) を参照してください。
+チーム・区分・大会・ファイターズ選手の初期タグは `migrations/20260920_operator_tags.sql`、選手のふりがなは `migrations/20260920_fighters_readings.sql`、所属チームと守備位置カテゴリは `migrations/20260920_fighters_categories.sql`、ファイターズの背番号は `migrations/20260920_fighters_uniform_numbers.sql`、マリーンズ選手は `migrations/20260920_marines_players.sql` にまとめています。適用方法とチームカラー・リーグカラーの変更箇所は [運営タグガイド](docs/operator-tags.md) を参照してください。
 写真アップロード、写真編集、プロジェクト作成、一括タグ付与、プロフィール編集にはタグ検索欄があります。

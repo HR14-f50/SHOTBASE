@@ -46,7 +46,7 @@ $renderTagChoice = static function (array $tag, array $extraAttributes = []) use
   echo '<label class="' . h($tagPickerLabelClass) . '"' . $attributes . ' style="' . h(profileTagStyle($tag)) . '">';
   echo '<input type="checkbox" name="' . h($tagPickerInputName) . '" value="' . $tagId . '"' . (in_array($tagId, $tagPickerSelected, true) ? ' checked' : '') . '>'; 
   echo '<span class="tag" style="' . h(profileTagStyle($tag)) . '">#' . h($tagName);
-  if ($uniformNumber !== '') echo '<span class="tagUniformNumber">背番号 ' . h($uniformNumber) . '</span>';
+  if ($uniformNumber !== '') echo '<span class="tagUniformNumber">' . h($uniformNumber) . '</span>';
   echo '</span></label>';
   if ($isDeletable) {
     echo '<button type="button" class="tagDeleteButton" data-delete-tag="' . $tagId . '" data-tag-name="' . h($tagName) . '" aria-label="' . h($tagName) . 'を登録タグから削除">×</button>';
@@ -79,6 +79,13 @@ $renderTagChoice = static function (array $tag, array $extraAttributes = []) use
                   <h4><?= h($teamName) ?></h4>
                   <?php foreach ($tagPickerCategoryLabels as $categoryKey => $categoryLabel): ?>
                     <?php if (empty($categories[$categoryKey])) continue; ?>
+                    <?php usort($categories[$categoryKey], static function (array $left, array $right): int {
+                      $leftNumber = trim((string)($left['uniform_number'] ?? ''));
+                      $rightNumber = trim((string)($right['uniform_number'] ?? ''));
+                      $leftGroup = $leftNumber === '' ? 2 : (mb_strlen($leftNumber) >= 3 ? 1 : 0);
+                      $rightGroup = $rightNumber === '' ? 2 : (mb_strlen($rightNumber) >= 3 ? 1 : 0);
+                      return [$leftGroup, $leftNumber === '' ? PHP_INT_MAX : (int)$leftNumber, $left['name']] <=> [$rightGroup, $rightNumber === '' ? PHP_INT_MAX : (int)$rightNumber, $right['name']];
+                    }); ?>
                     <div class="tagPickerCategory">
                       <h5><?= h($categoryLabel) ?></h5>
                       <div class="tagList"><?php foreach ($categories[$categoryKey] as $tag) $renderTagChoice($tag); ?></div>

@@ -237,12 +237,11 @@
 .tagUniformNumber {
   display: inline-flex;
   align-items: center;
-  padding: 1px 5px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .65);
+  margin-left: 2px;
   color: inherit;
   font-size: 10px;
-  font-weight: 700;
+  font-weight: 400;
+  opacity: .58;
 }
 .tagCreateArea {
   margin-top: 14px;
