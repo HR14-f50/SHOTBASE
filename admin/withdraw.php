@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt = $pdo->prepare('SELECT file_path, original_path FROM photos WHERE user_id = ? FOR UPDATE');
       $stmt->execute([$userId]);
       $photos = $stmt->fetchAll();
-      $paths = array_merge(array_column($photos, 'file_path'), array_column($photos, 'original_path'), [$user['icon_path'], $user['header_path']]);
+      $paths = array_merge(array_column($photos, 'file_path'), array_column($photos, 'original_path'), [$user['icon_path']]);
       // 共通アイコンと他ユーザーが参照する共有ファイルは削除しません。
       $root = realpath(__DIR__ . '/../uploads');
       $staging = sys_get_temp_dir() . '/shotbase-withdraw-' . bin2hex(random_bytes(16));
@@ -32,8 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $check = $pdo->prepare('SELECT id FROM photos WHERE user_id <> ? AND (file_path = ? OR original_path = ?) LIMIT 1');
         $check->execute([$userId, $relative, $relative]);
         if ($check->fetch()) continue;
-        $check = $pdo->prepare('SELECT id FROM users WHERE id <> ? AND (icon_path = ? OR header_path = ?) LIMIT 1');
-        $check->execute([$userId, $relative, $relative]);
+        $check = $pdo->prepare('SELECT id FROM users WHERE id <> ? AND icon_path = ? LIMIT 1');
+        $check->execute([$userId, $relative]);
         if ($check->fetch()) continue;
         $temporary = $staging . '/' . count($moved);
         if (!rename($absolute, $temporary)) throw new RuntimeException('写真を削除できませんでした。');
