@@ -50,13 +50,20 @@ if (avatarInput) {
   const preview = document.querySelector('[data-upload-preview]');
   const x = document.querySelector('[data-avatar-x]');
   const y = document.querySelector('[data-avatar-y]');
+  const zoom = document.querySelector('[data-avatar-zoom]');
+  const zoomValue = document.querySelector('[data-avatar-zoom-value]');
   const status = document.querySelector('[data-avatar-status]');
   const updateCrop = () => {
     if (!x || !y) return;
     preview.style.objectPosition = `${x.value}% ${y.value}%`;
+    const scale = zoom ? Number(zoom.value) / 100 : 1;
+    preview.style.transform = `scale(${scale})`;
+    preview.style.transformOrigin = `${x.value}% ${y.value}%`;
+    if (zoomValue) zoomValue.value = `${Math.round(scale * 100)}%`;
   };
   x?.addEventListener('input', updateCrop);
   y?.addEventListener('input', updateCrop);
+  zoom?.addEventListener('input', updateCrop);
   preview.addEventListener('load', () => {
     updateCrop();
     if (status && avatarInput.files.length) status.textContent = 'スライダーで切り抜く位置を調整してください。正方形の画像は位置を変えても表示が変わりません。';

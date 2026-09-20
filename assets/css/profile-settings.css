@@ -54,18 +54,27 @@
   width: 50px;
   height: 50px;
 }
-.motifChoices input {
+.motifChoices input,
+.iconColorChoices input {
   position: absolute;
-  top: 5px;
-  left: 5px;
-  margin: 0;
-  width: 14px;
-  height: 14px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .motifChoices label:has(input:checked),
 .iconColorChoices label:has(input:checked) {
   outline: 2px solid #687582;
   background: #f1f4f6;
+}
+.motifChoices label:has(input:focus-visible),
+.iconColorChoices label:has(input:focus-visible) {
+  outline: 3px solid #8bafcf;
+  outline-offset: 2px;
 }
 .iconColorChoices {
   display: grid;
@@ -83,14 +92,6 @@
   border-radius: 10px;
   cursor: pointer;
   border: 1px solid #dde4ec;
-}
-.iconColorChoices input {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  width: 14px;
-  height: 14px;
-  margin: 0;
 }
 .iconColorChoices span {
   width: 32px;

@@ -13,6 +13,7 @@ $photographer = $saved['user_type'] === 'photographer';
 $source = $photographer ? 'keep' : 'custom';
 $cropX = 50;
 $cropY = 50;
+$iconZoom = 100;
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!profileCsrfValid()) {
@@ -101,14 +102,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $cropX = filter_var($_POST['icon_crop_x'] ?? 50, FILTER_VALIDATE_FLOAT);
     $cropY = filter_var($_POST['icon_crop_y'] ?? 50, FILTER_VALIDATE_FLOAT);
+    $iconZoom = filter_var($_POST['icon_zoom'] ?? 100, FILTER_VALIDATE_FLOAT);
     if ($cropX === false || $cropY === false || $cropX < 0 || $cropX > 100 || $cropY < 0 || $cropY > 100) $errors[] = '画像の位置は0〜100の範囲で指定してください。';
+    if ($iconZoom === false || $iconZoom < 100 || $iconZoom > 300) $errors[] = '画像の拡大率は100〜300%の範囲で指定してください。';
     if (!$errors) {
       $newIcon = null;
       $staged = [];
       try {
         if ($source === 'custom') $user['icon_path'] = customIconPath($user['icon_motif'], $user['icon_color']);
         if ($source === 'upload') {
-          $newIcon = storeSignupIcon($_FILES['icon'] ?? [], (float)$cropX, (float)$cropY);
+          $newIcon = storeSignupIcon($_FILES['icon'] ?? [], (float)$cropX, (float)$cropY, (float)$iconZoom);
           $user['icon_path'] = $newIcon;
         }
         $changed = false;
@@ -186,9 +189,10 @@ $ownedTags = $stmt->fetchAll();
         <div data-icon-source-panel="upload">
           <label>画像ファイル<input type="file" name="icon" accept="image/jpeg,image/png,image/webp" data-avatar-upload></label>
           <p class="accountHelp">JPEG・PNG・WebP、20MB未満。保存時に自動で縮小・圧縮し、2MB以内の正方形アイコンにします。</p>
-          <img class="accountAvatar" data-upload-preview src="<?= h(publicPhotoPath($saved['icon_path'] ?: customIconPath('ball', 'blue'))) ?>" alt="アップロードする画像のプレビュー">
+          <div class="avatarUploadStage"><img class="accountAvatar" data-upload-preview src="<?= h(publicPhotoPath($saved['icon_path'] ?: customIconPath('ball', 'blue'))) ?>" alt="アップロードする画像のプレビュー"></div>
           <label>横の位置（左 ↔ 右）<input type="range" name="icon_crop_x" min="0" max="100" value="<?= (float)$cropX ?>" data-avatar-x></label>
           <label>縦の位置（上 ↔ 下）<input type="range" name="icon_crop_y" min="0" max="100" value="<?= (float)$cropY ?>" data-avatar-y></label>
+          <label>拡大縮小（100〜300%）<input type="range" name="icon_zoom" min="100" max="300" step="1" value="<?= (float)$iconZoom ?>" data-avatar-zoom><output data-avatar-zoom-value><?= (int)$iconZoom ?>%</output></label>
           <p class="accountHelp" data-avatar-status role="status">画像を選ぶと、切り抜く範囲を確認できます。</p>
         </div>
       <?php endif; ?>

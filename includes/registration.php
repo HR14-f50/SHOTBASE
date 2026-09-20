@@ -13,7 +13,7 @@ function removeSignupIcon(array $draft): void
   }
 }
 
-function storeSignupIcon(array $file, float $cropX = 50, float $cropY = 50): string
+function storeSignupIcon(array $file, float $cropX = 50, float $cropY = 50, float $zoom = 100): string
 {
   if ((int)($file['size'] ?? 0) >= MAX_UPLOAD_BYTES) {
     throw new RuntimeException('アイコンは20MB未満の画像を選択してください。');
@@ -30,8 +30,10 @@ function storeSignupIcon(array $file, float $cropX = 50, float $cropY = 50): str
     $src = imagecreatefromjpeg($path);
     $canvas = imagecreatetruecolor(256, 256);
     $side = min(imagesx($src), imagesy($src));
-    imagecopyresampled($canvas, $src, 0, 0, (int)round((imagesx($src) - $side) * max(0, min(100, $cropX)) / 100),
-      (int)round((imagesy($src) - $side) * max(0, min(100, $cropY)) / 100), 256, 256, $side, $side);
+    $zoom = max(100, min(300, $zoom));
+    $cropSide = max(1, $side / ($zoom / 100));
+    imagecopyresampled($canvas, $src, 0, 0, (int)round((imagesx($src) - $cropSide) * max(0, min(100, $cropX)) / 100),
+      (int)round((imagesy($src) - $cropSide) * max(0, min(100, $cropY)) / 100), 256, 256, (int)round($cropSide), (int)round($cropSide));
     $saved = imagejpeg($canvas, $path, 88);
     imagedestroy($src);
     imagedestroy($canvas);
