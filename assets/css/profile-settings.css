@@ -1,0 +1,241 @@
+.settingsShell {
+  max-width: 940px;
+  margin: 20px auto 70px;
+}
+.settingsShell h1 {
+  font-size: clamp(24px, 4vw, 36px);
+  margin-bottom: 14px;
+}
+.settingsCard {
+  background: #fff;
+  border: 1px solid #dce4ed;
+  border-radius: 14px;
+  padding: 28px;
+  margin: 20px 0;
+  box-shadow: 0 6px 24px #25446506;
+}
+.settingsCard h2 {
+  font-size: 21px;
+  margin: 0 0 22px;
+}
+.settingsCard .formStack {
+  gap: 16px;
+}
+.iconBuilderPreview {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 20px 0;
+}
+.iconBuilderPreview .accountAvatar {
+  flex: 0 0 92px;
+}
+.motifChoices {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(78px, 1fr));
+  gap: 8px;
+}
+.motifChoices label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 3px;
+  border: 1px solid #dde4ec;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 11px;
+  cursor: pointer;
+}
+.motifChoices img {
+  background: #8795a2;
+  border-radius: 12px;
+  width: 50px;
+  height: 50px;
+}
+.motifChoices input {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  margin: 0;
+  width: 14px;
+  height: 14px;
+}
+.motifChoices label:has(input:checked),
+.iconColorChoices label:has(input:checked) {
+  outline: 2px solid #687582;
+  background: #f1f4f6;
+}
+.iconColorChoices {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 9px;
+}
+.iconColorChoices label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 7px;
+  padding: 12px 3px;
+  font-size: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #dde4ec;
+}
+.iconColorChoices input {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 14px;
+  height: 14px;
+  margin: 0;
+}
+.iconColorChoices span {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+.iconSourceChoices {
+  display: flex;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+  margin: 22px 0;
+}
+.iconSourceChoices label {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font-size: 14px;
+}
+.iconSourceChoices input {
+  width: auto;
+  margin: 0;
+}
+.settingsColumns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.settingsColumns select {
+  width: 100%;
+  margin-top: 10px;
+}
+.positionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  aspect-ratio: 3 / 2;
+  max-width: 390px;
+  border: 1px solid #aabed2;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(155deg, #e6eef6, #f7f9fc);
+}
+.positionGrid label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px dashed #b8c7d5;
+  cursor: pointer;
+  font-size: 12px;
+}
+.positionGrid input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+.positionGrid label:has(input:checked) {
+  background: #cfdfef;
+  color: #244c74;
+}
+.settingsActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.settingsDanger {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid #dce4ed;
+}
+.ownerProjects {
+  margin: 0 0 36px;
+}
+.ownerProjects .profileSectionHeading {
+  align-items: start;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.ownerProjects .profileSectionHeading h2 {
+  margin-bottom: 0;
+}
+.ownerProjectList {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+.ownerProjectList a {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+  padding: 14px;
+  background: #f4f7fa;
+  border-radius: 8px;
+}
+.ownerProjectList span {
+  color: #64768a;
+  font-size: 12px;
+}
+.pickupEditor summary,
+.ownerProjects summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #687582;
+}
+.pickupEditor .button {
+  margin-top: 20px;
+}
+.iconPhotoChoices {
+  max-height: 450px;
+  overflow: auto;
+  padding: 3px;
+}
+[hidden] {
+  display: none !important;
+}
+@media (max-width: 600px) {
+  .settingsCard {
+    padding: 20px 16px;
+  }
+  .iconColorChoices {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .settingsColumns {
+    gap: 9px;
+  }
+  .settingsColumns label {
+    font-size: 12px;
+  }
+  .iconBuilderPreview {
+    gap: 14px;
+  }
+  .iconBuilderPreview .accountAvatar {
+    flex-basis: 72px;
+    width: 72px;
+    height: 72px;
+  }
+  .settingsActions .button {
+    width: 100%;
+  }
+}
+.motifChoices label,
+.iconColorChoices label,
+.positionGrid label {
+  width: 100%;
+  margin: 0;
+}

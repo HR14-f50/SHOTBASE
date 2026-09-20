@@ -1,0 +1,210 @@
+/* プロフィール上部・ピックアップの高さはここで調整します。 */
+.profileIdentityWrap {
+  padding: 14px 0 12px;
+}
+.profileIdentity {
+  padding-top: 0;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.profileAvatar {
+  width: 62px;
+  height: 62px;
+  flex-basis: 62px;
+  margin-top: 0;
+  border-width: 3px;
+  font-size: 24px;
+}
+.profileNameBlock h1 {
+  font-size: 24px;
+}
+.profileBio {
+  margin: 8px 0;
+  line-height: 1.6;
+  font-size: 13px;
+}
+.profileTagList {
+  margin: 8px 0;
+}
+.profileStats {
+  margin: 8px 0 0;
+}
+.profileGuestButton {
+  font-size: 12px;
+}
+.profileLayout {
+  padding-top: 18px;
+  gap: 30px;
+}
+.profileAreaB,
+.profileAreaC {
+  min-width: 0;
+}
+.profileSectionHeading {
+  margin-bottom: 12px;
+}
+.profileSectionHeading h2 {
+  font-size: 20px;
+}
+.pickupSection {
+  position: relative;
+  margin-bottom: 22px;
+}
+.pickupGallery {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 132px;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  background: #e9eef3;
+}
+.pickupGallery > a {
+  display: block;
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: auto;
+  scroll-snap-align: start;
+}
+.pickupGallery img {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+}
+.sliderControls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin: -4px 0 6px;
+}
+.sliderControls button {
+  padding: 1px 12px;
+  border: 1px solid #d6dce2;
+  border-radius: 6px;
+  background: #fff;
+  color: #687582;
+  cursor: pointer;
+}
+.sliderControls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.profileProjectRow {
+  padding: 14px 0;
+  grid-template-columns: 116px minmax(0, 1fr) 24px;
+  gap: 18px;
+}
+.projectDate {
+  margin: 0 0 6px;
+}
+.projectExcerpt {
+  margin: 6px 0;
+}
+.coverActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 0 18px;
+}
+.coverActions p {
+  margin: 0;
+}
+.guestPreviewNotice {
+  font-size: 11px;
+  padding: 8px 16px;
+  margin-bottom: 0;
+}
+@media (max-width: 700px) {
+  .profileIdentityWrap {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .profileAvatar {
+    width: 52px;
+    height: 52px;
+    flex-basis: 52px;
+  }
+  .profileNameBlock h1 {
+    font-size: 20px;
+  }
+  .profileLayout {
+    padding-top: 12px;
+    gap: 14px;
+  }
+  .profileAreaB {
+    display: block;
+    padding-bottom: 8px;
+  }
+  .sidebarSection {
+    min-width: 0;
+  }
+  .sidebarSection + .sidebarSection {
+    margin-top: 6px;
+  }
+  .sidebarSection:has(.archiveDisclosure) > h2,
+  .sidebarSection:has(.archiveDisclosure) > .eyebrow {
+    display: none;
+  }
+  .sidebarSection h2 {
+    margin-bottom: 8px;
+  }
+  .sidebarSection .eyebrow {
+    display: none;
+  }
+  .pickupGallery {
+    height: 100px;
+  }
+  .profileProjectRow {
+    grid-template-columns: 82px minmax(0, 1fr) 18px;
+    gap: 12px;
+  }
+  .profileEditButton,
+  .profileGuestButton {
+    width: auto;
+    margin-left: 0;
+  }
+}
+
+.archiveDisclosure > summary {
+  font-size: 12px;
+  color: #687582;
+  cursor: pointer;
+}
+@media (min-width: 701px) {
+  .archiveDisclosure > summary {
+    display: none;
+  }
+}
+.profileIdentityWrap {
+  padding-top: 10px;
+  padding-bottom: 8px;
+}
+.profileAvatar {
+  width: 56px;
+  height: 56px;
+  flex-basis: 56px;
+}
+.profileProjects {
+  margin-top: 18px;
+}
+.pickupSection {
+  margin-bottom: 0;
+}
+.sliderControls {
+  position: absolute;
+  top: 14px;
+  right: 0;
+  margin: 0;
+}
+.pickupSection .profileSectionHeading {
+  padding-right: 90px;
+}
+.pickupSection .profileSectionHeading > span {
+  display: none;
+}

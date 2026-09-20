@@ -1,0 +1,8 @@
+ALTER TABLE users
+  ADD COLUMN icon_motif VARCHAR(30) NOT NULL DEFAULT 'ball',
+  ADD COLUMN icon_color VARCHAR(30) NOT NULL DEFAULT 'blue',
+  ADD COLUMN watermark_source VARCHAR(20) NOT NULL DEFAULT 'username',
+  ADD COLUMN watermark_text VARCHAR(80) NOT NULL DEFAULT '',
+  ADD COLUMN watermark_size VARCHAR(10) NOT NULL DEFAULT 'medium',
+  ADD COLUMN watermark_color VARCHAR(10) NOT NULL DEFAULT 'white',
+  ADD COLUMN watermark_opacity SMALLINT NOT NULL DEFAULT 50;

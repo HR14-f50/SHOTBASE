@@ -1,0 +1,117 @@
+/* 共通ヘッダー：通常は上端だけを残し、ホバー・キーボード操作で表示。 */
+.headerReveal {
+  position: relative;
+  height: 14px;
+  z-index: 30;
+  border-top: 3px solid #d6dce2;
+}
+.headerReveal .siteHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 38px;
+  padding: 3px 24px;
+  transform: translateY(-110%);
+  opacity: 0;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.headerReveal .logo { font-size: 19px; }
+.headerReveal .siteHeader nav { font-size: 12px; }
+.headerReveal:hover .siteHeader,
+.headerReveal:focus-within .siteHeader {
+  transform: translateY(0);
+  opacity: 1;
+}
+.profileLayout {
+  width: min(1440px, 94%);
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 30px;
+  padding-top: 24px;
+}
+.profileAreaB { padding-right: 22px; }
+.profileAreaB .profileIdentityWrap { width: 100%; margin: 0; padding: 0 0 20px; }
+.profileAreaB .profileAreaA { margin-bottom: 24px; }
+.profileAreaB .profileIdentity { gap: 12px; align-items: flex-start; }
+.profileAreaB .profileNameBlock { min-width: 0; flex: 1; }
+.profileNameBlock h2 { font-size: 19px; line-height: 1.4; margin: 0 0 5px; overflow-wrap: anywhere; }
+.profileNameBlock h2 a { color: inherit; text-decoration: none; }
+.profileAreaB .profileEditButton,
+.profileAreaB .profileGuestButton { margin: 0; width: 100%; text-align: center; }
+.profileBio { white-space: nowrap; overflow-x: auto; overflow-wrap: normal; max-width: 100%; }
+.profileStats { gap: 12px; flex-wrap: wrap; }
+.pickupSlider { position: relative; }
+.pickupGallery { height: 198px; }
+.pickupSlider .sliderControls {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  z-index: 2;
+  margin: 0;
+  padding: 0 10px;
+}
+.pickupSlider .sliderControls button {
+  width: 38px;
+  height: 46px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px #152a4055;
+  background: #ffffffed;
+  font-size: 24px;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.pickupSlider:hover .sliderControls button,
+.pickupSlider:focus-within .sliderControls button { opacity: 1; transform: none; }
+.pickupSlider:hover .sliderControls button:disabled,
+.pickupSlider:focus-within .sliderControls button:disabled { opacity: .3; }
+.pickupSection .profileSectionHeading { padding-right: 0; }
+.publicDetailLayout .photoDetail { margin: 0; padding: 0; }
+.publicDetailLayout .photoDetail > .muted { display: none; }
+.publicDetailLayout .photoDetailImage { margin: 0 0 20px; background: #e9eef3; }
+.publicDetailLayout .photoDetailImage img { width: 100%; height: auto; max-height: calc(100vh - 60px); object-fit: contain; }
+.publicDetailLayout .projectHeader { padding-top: 0; margin-top: 0; }
+.tagManageItem { display: inline-flex; align-items: center; gap: 3px; }
+.tagDeleteButton { border: 0; padding: 4px 6px; border-radius: 50%; color: #6a4551; background: #f5e9ed; cursor: pointer; font-size: 12px; }
+[data-upload-preview] { width: 160px; height: 160px; object-fit: cover; object-position: 50% 50%; border-radius: 50%; }
+[data-icon-source-panel="upload"] input[type="range"] { width: min(100%, 360px); display: block; padding: 0; }
+@media (max-width: 900px) {
+  .profileLayout { grid-template-columns: 220px minmax(0, 1fr); gap: 20px; }
+  .profileAreaB { display: block; }
+}
+@media (max-width: 700px) {
+  .profileLayout { grid-template-columns: minmax(0, 1fr); padding-top: 14px; }
+  .profileAreaB { border-right: 0; padding-right: 0; }
+  .profileAreaB .profileAreaA { margin-bottom: 14px; }
+  .profileAreaB .profileNameBlock { flex-basis: auto; }
+  .profileAreaB .profileEditButton,
+  .profileAreaB .profileGuestButton { width: auto; }
+  .pickupGallery { height: 150px; }
+  .publicDetailLayout .photoDetailImage img { max-height: 85vh; }
+}
+@media (hover: none), (pointer: coarse) {
+  .headerReveal { height: auto; }
+  .headerReveal .siteHeader { position: relative; transform: none; opacity: 1; padding-inline: 12px; }
+  .pickupSlider .sliderControls button { opacity: 1; transform: none; }
+  .pickupSlider .sliderControls button:disabled { opacity: .3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .headerReveal .siteHeader,
+  .pickupSlider .sliderControls button { transition: none; }
+}
+.publicDetailLayout .photoDetail {
+  display: block;
+  width: 100%;
+  max-width: none;
+}
+.publicDetailLayout .photoCaption,
+.publicDetailLayout .photoTags {
+  margin-top: 16px;
+}
+.publicDetailLayout .photoCaption p { margin: 0; }

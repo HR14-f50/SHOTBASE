@@ -1,0 +1,79 @@
+/* ヘッダーは通常フローのsticky。下方向だけ退避し、上方向で再表示します。 */
+.headerReveal {
+  position: sticky;
+  top: 0;
+  height: auto;
+  border-top: 0;
+  transform: translateY(0);
+  transition: transform .2s ease;
+}
+.headerReveal.isHeaderHidden:not(:focus-within) { transform: translateY(-100%); }
+.headerReveal .siteHeader {
+  position: relative;
+  transform: none;
+  opacity: 1;
+  min-height: 40px;
+  padding: 4px 24px;
+}
+.profileBio { white-space: normal; overflow: visible; overflow-wrap: anywhere; }
+.profileAvatarLink { display: block; flex: 0 0 auto; border-radius: 50%; color: inherit; text-decoration: none; }
+.profileAvatarLink:focus-visible { outline: 3px solid var(--profile-accent, #687582); outline-offset: 3px; }
+.projectHeader h1 { font-size: 24px; line-height: 1.4; }
+.projectUpdated { font-size: 11px; color: var(--muted); margin: 5px 0 10px; }
+.tagFilterForm .projectTagList { display: flex; flex-wrap: wrap; gap: 6px; }
+.tagFilterForm .actionRow { gap: 10px; margin-top: 12px; font-size: 12px; }
+.popularTagsDisclosure > summary { color: #687582; cursor: pointer; font-size: 12px; font-weight: 700; margin-bottom: 12px; }
+.popularTagsDisclosure[open] .tagFilterForm .projectTagList { max-height: 390px; overflow-y: auto; align-content: flex-start; padding-right: 4px; }
+.popularTagsDisclosure .tagFilterForm .projectTagList { scrollbar-width: thin; }
+.bulkPhotoChoice { display: flex; align-items: center; gap: 6px; font-size: 11px; padding: 8px; }
+.bulkPhotoChoice input { width: auto; }
+.managePhotoCard:has(.bulkPhotoChoice input:checked) { outline: 3px solid var(--profile-accent, #687582); }
+.personalTheme { --accent: var(--profile-accent); --accent-soft: var(--profile-soft); }
+.personalTheme .siteHeader,
+.personalTheme .settingsCard,
+.personalTheme .profileAreaB { background-color: var(--profile-soft); }
+.personalTheme .profileAreaB { padding: 18px; border-radius: 10px; }
+.personalTheme .textLink,
+.personalTheme .profileNameBlock,
+.personalTheme .projectHeader h1,
+.personalTheme .profileSectionHeading h2 { color: var(--profile-accent); }
+.personalTheme .button.primary { background: var(--profile-accent); border-color: var(--profile-accent); color: #fff; }
+.personalTheme .profileAvatar { background: var(--profile-accent); }
+.themeSwatches { display: flex; flex-wrap: wrap; gap: 16px; }
+.themeSwatches label { position: relative; display: grid; justify-items: center; gap: 6px; cursor: pointer; min-width: 66px; }
+.themeSwatches input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.themeSwatches span { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 3px solid #fff; box-shadow: 0 0 0 1px #b5bdc5; }
+.themeSwatches input:checked + span { outline: 3px solid var(--profile-accent); outline-offset: 3px; }
+.themeSwatches input:checked + span::after { content: '✓'; color: #fff; }
+.themeSwatches input:focus-visible + span { outline: 3px solid #111; outline-offset: 3px; }
+.themeSwatches small { font-size: 11px; }
+.fixedField { display: grid; gap: 8px; }
+.fixedFieldLabel { font-size: 13px; font-weight: 700; }
+.fixedFieldValue { display: block; min-height: 44px; padding: 10px 12px; border: 1px solid #d6dce2; border-radius: 5px; background: #f1f3f5; color: #5f6b76; font-weight: 600; letter-spacing: .02em; }
+@media (prefers-reduced-motion: reduce) { .headerReveal { transition: none; } }
+.profileAreaB .sidebarSection h2 { font-size: 15px; line-height: 1.5; }
+@media (max-width: 700px) {
+  .headerReveal .siteHeader { padding-inline: 12px; }
+  .headerReveal .siteHeader nav { gap: 10px; }
+  .themeSwatches { gap: 12px; }
+  .personalTheme .profileAreaB { padding: 14px; }
+  .projectHeader h1 { font-size: 21px; }
+  .projectPublicPage .profileAreaB .profileBio,
+  .projectPublicPage .profileAreaB .profileStats { display: none; }
+  .projectPublicPage .profileAreaB .profileIdentityWrap { padding-bottom: 12px; }
+  .projectPublicPage .profileAreaB .profileIdentity { align-items: center; }
+  .popularTagsDisclosure[open] .tagFilterForm .projectTagList { max-height: none; overflow: visible; }
+  .popularTagsDisclosure > summary { margin-bottom: 10px; }
+  :is(.projectPublicPage, .publicProfilePage) .pickupSlider { display: flex; flex-direction: column; }
+  :is(.projectPublicPage, .publicProfilePage) .pickupSlider .pickupGallery { order: 1; }
+  :is(.projectPublicPage, .publicProfilePage) .pickupSlider .sliderControls {
+    order: 2;
+    position: static;
+    inset: auto;
+    height: auto;
+    justify-content: center;
+    gap: 10px;
+    padding: 7px 0 0;
+  }
+  :is(.projectPublicPage, .publicProfilePage) .pickupSlider .sliderControls button { opacity: 1; transform: none; width: 42px; height: 34px; }
+}

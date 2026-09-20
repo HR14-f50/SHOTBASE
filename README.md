@@ -1,0 +1,114 @@
+# SHOTBASE
+
+野球写真専用の個人向け写真アーカイブの初期PHP版。
+
+## 開発環境
+- PHP 8.x
+- MariaDB / MySQL
+- XAMPP
+- HTML / CSS / JavaScript
+
+## 1. DB
+`shotbase_database.sql` を phpMyAdmin からインポートしてください。
+
+## GitHubから取得した場合
+このリポジトリにはアプリケーションのソース、DBスキーマ、マイグレーションを含めています。利用前に `includes/config.php` のDB接続先を自分の環境へ合わせてください。
+
+アップロード画像とローカル用のDBダンプはリポジトリに含めていません。`uploads/` 配下は書き込み可能にし、`shotbase_database.sql` と `migrations/` を順番に適用してください。
+
+## 2. DB接続
+`SHOTBASE_DB_HOST`、`SHOTBASE_DB_NAME`、`SHOTBASE_DB_USER`、`SHOTBASE_DB_PASS` をWebサーバーまたはPHP-FPMの環境変数に設定します。MAMP/XAMPPのローカル環境では、利用中のMariaDB設定に合わせて設定してください。公開リポジトリにパスワードを書き込まないでください。
+
+サブディレクトリで動かす場合は `SHOTBASE_BASE_URL` も設定します（例: `/shotbase`）。
+
+## 3. 初期ユーザー
+`register.php` から最初のユーザーを登録できます。
+会員登録ページは本番公開時には制限・改善してください。
+
+## 4. 画像仕様
+- 入力は1枚20MB未満、1回最大50枚。保存時に1画像2MB以内へ自動圧縮
+- 長辺2000px超はアップロード時に自動縮小
+- プロジェクト最大200枚
+- MIMEタイプを確認
+- 保存時はランダムファイル名を使用
+
+## 5. ウォーターマーク
+`includes/watermark.php` で画像加工します。文字サイズと太さは `includes/watermark_style.php` で設定します。
+1行目にユーザー名・ニックネーム・自由入力のいずれか、2行目にサイト名を描画します。
+
+タグ配色と今回の画面調整は [調整ガイド](docs/gallery-tags-watermark.md) を参照してください。
+
+注意：GD拡張が有効である必要があります。
+
+## 6. 今回の骨組みに含まれるもの
+公開:
+- index.php
+- profile.php
+- project.php
+- photo.php
+- tag.php
+
+ログイン:
+- login.php
+- logout.php
+- register.php
+
+管理:
+- admin/index.php
+- admin/project.php
+- admin/upload.php
+- admin/photos.php
+- admin/photo_edit.php
+- admin/profile_edit.php
+
+## 7. 次に実装する部分
+- 本格的なタグ管理UI
+- チーム登録UI
+- 画像一括タグ付け
+- お気に入りプロジェクト
+- 公開/非公開/下書きの細かなUI
+- セキュリティ強化
+- CSRF対策
+- ページネーション
+- 画像削除時のファイル削除
+
+## 2026-09-17: トップ・公開プロフィール
+- `index.php`: サービス案内とログイン・新規登録への入口。
+- `profile.php?username=ユーザー名`: 全幅プロフィール、タグ・月別アーカイブ、ピックアップ、プロジェクト一覧。
+- `admin/profile_edit.php`: 自己紹介（200文字）、任意タグ（10個）、ピックアップ写真（12枚）の設定。
+- 最新順・古い順はプロジェクト作成日時が基準。同日時はIDで順序を固定。
+- アーカイブは撮影日が基準。期間指定は開始月、未指定は「日付未指定」。
+- 公開プロフィールには公開プロジェクトと公開写真だけを表示。写真数・タグ集計も同様。
+- ピックアップは縦横比を保持した隙間のない行配置。画面幅に合わせて再配置。
+- ログインしたユーザーはプロジェクトにいいね・取り消しが可能。
+- スタイルは `assets/css/profile.css`、ギャラリーは `assets/js/profile-gallery.js`。
+- タグの基本CSSは従来どおり `assets/css/style.css` の `.tag` を共有。
+
+### 別環境へ移す場合
+最新の `shotbase.sql` を復元後、`migrations/20260917_profile.sql` を適用してください。
+このMAMP環境には適用済みです。追加テーブルはプロフィールタグ、ピックアップ写真、いいねの3つです。
+プロフィールはアイコンを表示します。ヘッダー画像は2026-09-18のデザイン変更で非表示になりました。
+画像未設定・公開写真未登録の場合は、それぞれ代替背景・空の状態を表示します。
+
+## 写真登録・ログイン時の転送
+詳細は `docs/photo-upload.md` を参照してください。
+ログイン済みのトップページアクセスは、投稿ユーザーなら自分のプロフィール、閲覧ユーザーならアカウント画面へ転送します。
+
+## 4ステップ登録・青系テーマ
+詳細とメール認証の導入手順は `docs/registration-email.md` を参照してください。
+別環境では追加で `migrations/20260918_registration.sql` を一度適用してください。このMAMP環境には適用済みです。
+メール認証は設計のみで、現時点の新規登録は確認後すぐに利用可能になります。
+
+## プロフィール中心の管理・アイコン・ウォーターマーク
+詳細は `docs/profile-controls.md` を参照してください。
+独立した管理画面は廃止し、旧URLは自分のプロフィールへ転送します。
+`migrations/20260918_profile_controls.sql` はこのMAMP環境に適用済みです。
+メール認証は見送りです。`docs/registration-email.md` は過去の検討資料です。
+
+## 管理UI更新（2026-09-19）
+ログアウト確認、マイページのプロジェクト管理統合、写真の公開初期値、写真登録・編集のタグ追加、ゲストプレビュー、ウォーターマークの見本表示を追加しました。
+詳細は `docs/admin-ui.md`、DB初期値の変更は `migrations/20260919_public_photos.sql` を参照してください（このMAMP環境に適用済み）。
+
+最新のサイドバー・タグ・アイコン操作は [画面更新ガイド](docs/sidebar-refresh.md) を参照してください。
+
+最新のプロジェクト管理・タグ制限・テーマ仕様は [管理・検索更新ガイド](docs/project-refresh.md) を参照してください。

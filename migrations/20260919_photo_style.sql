@@ -1,0 +1,3 @@
+ALTER TABLE photos
+  ADD COLUMN watermark_size VARCHAR(10) NULL,
+  ADD COLUMN watermark_weight SMALLINT UNSIGNED NULL;

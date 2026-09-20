@@ -1,0 +1,900 @@
+@charset "UTF-8";
+
+/* ==============================
+  基本設定
+============================== */
+
+:root {
+  --bg: #f5f6f7;
+  --text: #111;
+  --muted: #767676;
+  --line: #d2d5d9;
+  --card: #fff;
+  --accent: #687582;
+  --danger: #bd2525;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Noto Sans JP", sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-size: clamp(24px, 6vw, 50px);
+}
+
+h2 {
+  margin: 0;
+}
+
+/* ==============================
+  ヘッダー・レイアウト
+============================== */
+
+.siteHeader {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: rgba(245, 245, 242, 0.92);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+
+.siteHeader nav {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.logo {
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.container {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 48px 0 80px;
+}
+
+.hero,
+.profileHero,
+.projectHeader {
+  margin-bottom: 48px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.sectionHeader,
+.actionRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* ==============================
+  カード・共通表示
+============================== */
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  display: block;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform .18s ease, border-color .18s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: var(--text);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.empty {
+  color: var(--muted);
+}
+
+/* ==============================
+  ボタン
+============================== */
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--text);
+  border-radius: 999px;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+
+.button.primary {
+  color: #fff;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.button.danger {
+  border-color: #c62828;
+  color: #c62828;
+  background: transparent;
+}
+
+.button.danger:hover {
+  background: #c62828;
+  color: #fff;
+}
+
+.button.small {
+  min-height: 36px;
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+/* ==============================
+  フォーム
+============================== */
+
+.formPage {
+  width: min(640px, 100%);
+  margin: 0 auto;
+}
+
+.formStack {
+  display: grid;
+  gap: 18px;
+}
+
+.formStack label {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+fieldset label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-bottom: 12px;
+}
+
+input[type="radio"] {
+  width: auto;
+  margin: 0;
+}
+
+input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid rgba(29, 79, 255, .18);
+  border-color: var(--accent);
+}
+
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.formGroup > label,
+.formGroup legend {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.formGroup input[type="text"],
+.formGroup input[type="date"],
+.formGroup textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.formGroup textarea {
+  resize: vertical;
+}
+
+.formGroup input[type="radio"] {
+  margin-right: 5px;
+}
+
+fieldset.formGroup {
+  padding: 0;
+  border: 0;
+}
+
+fieldset.formGroup label {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+
+.formMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.formMeta .formHelp {
+  margin: 0;
+}
+
+.formHelp {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #777;
+}
+
+.formLabel {
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.charCounter {
+  margin-top: 6px;
+  text-align: right;
+  font-size: 12px;
+  color: #777;
+}
+
+.textCounter {
+  flex-shrink: 0;
+  margin: 0;
+  font-size: 13px;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
+
+.errorMessage {
+  margin-bottom: 20px;
+  color: #d00;
+}
+
+.errorBox {
+  margin: 20px 0;
+  padding: 16px;
+  border: 1px solid #c62828;
+  color: #c62828;
+}
+
+.errorBox p {
+  margin: 0 0 6px;
+}
+
+.errorBox p:last-child {
+  margin-bottom: 0;
+}
+
+.successMessage {
+  margin-bottom: 24px;
+  padding: 12px 16px;
+  border: 1px solid #2e557d;
+}
+
+.checkLine {
+  grid-template-columns: auto 1fr !important;
+  align-items: center;
+}
+
+.checkLine input {
+  width: auto;
+}
+
+/* ==============================
+  撮影日設定
+============================== */
+
+.dateModeOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.dateModeOptions label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dateInputArea {
+  margin-top: 16px;
+}
+
+#rangeDateArea {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dateInputArea label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.dateRangeSeparator {
+  padding-bottom: 10px;
+}
+
+/* ==============================
+  タグ
+============================== */
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.tag {
+  display: inline-flex;
+  padding: 6px 12px;
+  border: 1px solid #222;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 13px;
+}
+
+.tagCheckboxList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tagCheckbox {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  gap: 5px;
+  padding: 5px 9px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  font-size: 13px;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tagCheckbox input {
+  width: auto;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.tagCheckboxItem {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  gap: 5px;
+  padding: 5px 9px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  font-size: 13px;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.tagCheckboxItem input {
+  flex: 0 0 auto;
+  width: auto;
+  margin: 0;
+}
+
+.tagCheckboxItem > span {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.tagCheckboxItem.is-default {
+  font-weight: 700;
+}
+
+.defaultTagMark {
+  display: inline-block;
+  flex: 0 0 auto;
+  margin-left: 2px;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.08);
+  font-size: 9px;
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.photoTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.photoTag {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.projectTags {
+  margin: 24px 0 32px;
+}
+
+.projectTagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.projectTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  color: inherit;
+  text-decoration: none;
+  font-size: 14px;
+  transition: opacity 0.2s,
+    transform 0.2s;
+}
+
+.projectTag:hover {
+  opacity: 0.75;
+  transform: translateY(-1px);
+}
+
+.projectTag.is-active {
+  font-weight: 700;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.projectTagCount {
+  font-size: 12px;
+  opacity: 0.65;
+}
+
+.filterNotice {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  padding: 12px 0;
+}
+
+.filterNotice p {
+  margin: 0;
+}
+
+.tagCreateArea {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid #ddd;
+}
+
+.tagCreateArea h2 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+/* ==============================
+  通知・アップロード
+============================== */
+
+.notice {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.notice.error {
+  border-color: #e5a0a0;
+}
+
+.notice.success {
+  border-color: #98b0c9;
+}
+
+.uploadRules {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.uploadRules p {
+  margin: 0;
+}
+
+/* ==============================
+  写真一覧・詳細
+============================== */
+
+.photoGrid,
+.adminPhotoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.photoCard {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: #ddd;
+}
+
+.photoCard img,
+.adminPhotoCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adminPhotoCard {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.adminPhotoBody {
+  padding: 12px;
+}
+
+.adminPhotoBody h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.photoDetail {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, .8fr);
+  gap: 32px;
+  align-items: start;
+  max-width: 1000px;
+  width: min(100% - 32px, 1000px);
+  margin: 0 auto;
+}
+
+.detailImage {
+  width: 100%;
+  background: #111;
+}
+
+.photoMeta {
+  position: sticky;
+  top: 100px;
+}
+
+.editPreview {
+  margin-bottom: 24px;
+  background: #111;
+  display: block;
+  width: 100%;
+  max-width: 900px;
+  max-height: 70vh;
+  margin: 24px 0;
+  object-fit: contain;
+}
+
+.photoDetailImage {
+  margin: 24px 0;
+}
+
+.photoDetailImage img {
+  display: block;
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+.photoDetailInfo {
+  margin-top: 24px;
+}
+
+.photoCaption {
+  margin-top: 24px;
+  line-height: 1.8;
+}
+
+.photoVisibility {
+  flex-shrink: 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.projectPhotoActions {
+  margin-bottom: 24px;
+}
+
+.adminProjectPhotoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.adminProjectPhotoCard {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.adminProjectPhotoImage {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #eee;
+}
+
+.adminProjectPhotoImage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adminProjectPhotoMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.adminProjectPhotoTitle {
+  margin: 0;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ==============================
+  モーダル
+============================== */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, .55);
+}
+
+.modalOverlay.is-open {
+  display: flex;
+}
+
+.modal {
+  position: relative;
+  width: min(460px, 100%);
+  padding: 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .2);
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 28px;
+}
+
+/* ==============================
+  削除・危険操作
+============================== */
+
+.dangerForm {
+  margin-top: 32px;
+}
+
+.dangerZone {
+  margin-top: 64px;
+  padding-top: 32px;
+  border-top: 1px solid #ddd;
+}
+
+.dangerZone h2 {
+  margin-bottom: 12px;
+}
+
+.dangerZone p {
+  margin: 6px 0;
+}
+
+.dangerZone form {
+  margin-top: 20px;
+}
+
+/* ==============================
+  プロジェクト編集
+============================== */
+
+.projectForm {
+  max-width: 700px;
+  margin-top: 32px;
+}
+
+/* ==============================
+  レスポンシブ
+============================== */
+
+@charset "UTF-8";
+
+@media (max-width: 800px) {
+  .cardGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .photoGrid,
+  .adminPhotoGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .photoDetail {
+    grid-template-columns: 1fr;
+  }
+
+  .photoMeta {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .siteHeader {
+    padding: 14px 16px;
+  }
+
+  .container {
+    width: min(100% - 24px, 1100px);
+    padding-top: 32px;
+  }
+
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .photoGrid,
+  .adminPhotoGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sectionHeader,
+  .actionRow {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .adminProjectPhotoGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .adminProjectPhotoGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}

@@ -1,0 +1,40 @@
+.photoUploadPage { max-width: 1000px; margin: auto; }
+.photoUploadPage h1 { font-size: clamp(28px, 4vw, 42px); margin-bottom: 12px; }
+.uploadProjectName { font-size: 16px; color: #656a70; }
+.uploadPicker { position: relative; text-align: center; background: #ecf0f4; border: 2px dashed #a9b6c3; border-radius: 10px; padding: 32px 20px; }
+.uploadPicker.isDragging { border-color: #23374c; background: #d7e0ea; }
+.uploadPicker h2 { font-size: 19px; margin: 12px 0; }
+.uploadPicker p { font-size: 12px; }
+.uploadPickerIcon { font-size: 34px; color: #697582; }
+.uploadPicker .primary, .uploadActions .primary { background: #23374c; border-color: #23374c; color: #fff; border-radius: 5px; }
+.uploadFileInput { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); padding: 0; border: 0; }
+.uploadPicker:focus-within { outline: 2px solid #23374c; outline-offset: 4px; }
+.uploadQueueHeader { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin: 28px 0 16px; }
+.uploadQueueHeader h2 { font-size: 18px; }
+.uploadQueueHeader span { color: #656a70; font-size: 13px; margin-left: 10px; }
+.uploadQueueHeader .button { font-size: 12px; }
+.uploadQueueEmpty { padding: 32px 15px; text-align: center; border: 1px solid #d6dce2; border-radius: 5px; color: #676c71; font-size: 13px; }
+.photoQueue { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.queuedPhoto { display: grid; grid-template-columns: 72px minmax(0, 1fr) 30px; align-items: center; gap: 12px; padding: 10px; border: 1px solid #d6dce2; background: #fff; border-radius: 6px; }
+.queuedPhoto img { width: 72px; height: 72px; object-fit: cover; border-radius: 3px; }
+.queuedPhotoName { font-size: 12px; overflow-wrap: anywhere; margin: 0 0 6px; }
+.queuedPhotoState { font-size: 11px; color: #676c71; margin: 0; overflow-wrap: anywhere; }
+.queuedPhotoState.isError { color: #b23232; }
+.queuedPhotoState.isDone { color: #254260; }
+.removeQueuedPhoto { width: 30px; height: 36px; border: 0; font-size: 22px; background: transparent; color: #676c71; cursor: pointer; }
+.photoUploadPage button:disabled, .uploadPicker:has(input:disabled) label { opacity: .45; cursor: not-allowed; }
+.uploadTags { margin: 26px 0; border: 1px solid #d6dce2; padding: 20px; border-radius: 6px; }
+.uploadTags legend { font-size: 14px; padding: 0 8px; }
+.uploadTagChoice { display: flex; align-items: center; gap: 6px; }
+.uploadTagChoice input { width: auto; }
+.uploadProgressArea { margin: 24px 0; }
+.uploadProgressArea progress { width: 100%; height: 16px; accent-color: #23374c; }
+.uploadProgressArea p, .uploadProgressArea label { font-size: 13px; }
+.uploadActions { display: flex; flex-wrap: wrap; gap: 12px; margin: 25px 0 16px; }
+.uploadSaveNote { font-size: 12px; color: #676c71; line-height: 1.8; }
+@media (max-width: 600px) {
+  .photoQueue { grid-template-columns: 1fr; }
+  .uploadPicker { padding: 24px 15px; }
+  .uploadPicker h2 { font-size: 17px; }
+  .uploadActions > .button { width: 100%; }
+}

@@ -1,0 +1,465 @@
+/* 共通カラー。公開プロフィールの選択色は profileTheme の中だけに適用。 */
+:root {
+  --accent: #687582;
+  --bg: #f5f6f7;
+  --muted: #667585;
+  --line: #dbe2e9;
+}
+body {
+  color: #233344;
+  background: var(--bg);
+}
+.siteHeader {
+  background: rgba(247, 249, 251, 0.97);
+}
+.button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.profileIdentity {
+  padding-top: 0;
+}
+.profileIdentityWrap {
+  padding-top: 38px;
+}
+.profileAvatar {
+  margin-top: 0;
+}
+.profileTheme {
+  --accent: var(--profile-accent);
+}
+.profileTheme .profileAvatar {
+  background: var(--profile-accent);
+}
+.profileTheme .profileNameBlock h1,
+.profileTheme .profileSectionHeading h2 {
+  color: var(--profile-accent);
+}
+.profileTheme .archiveLink.isActive,
+.profileTheme .profileEmpty {
+  background: var(--profile-soft);
+}
+.profileTheme .archiveLink.isActive,
+.profileTheme .textLink {
+  color: var(--profile-accent);
+}
+.profileTheme .popularTagList .isActive .tag {
+  outline-color: var(--profile-accent);
+}
+.profileTheme .button.primary {
+  background: var(--profile-accent);
+  border-color: var(--profile-accent);
+}
+.accountPage .container {
+  padding: 48px 0 72px;
+}
+.signupShell {
+  width: min(780px, 100%);
+  margin: 0 auto;
+}
+.loginShell {
+  width: min(480px, 100%);
+  margin: 12px auto;
+}
+.signupShell > h1,
+.loginShell h1 {
+  font-size: clamp(24px, 4vw, 34px);
+  line-height: 1.5;
+  letter-spacing: -0.035em;
+}
+.accountPage .eyebrow {
+  color: #6e849a;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+}
+.signupCard {
+  background: #fff;
+  border: 1px solid #dce4ed;
+  border-radius: 10px;
+  padding: 32px;
+  margin-top: 28px;
+  box-shadow: 0 8px 30px #23334405;
+}
+.signupCard h2 {
+  font-size: 22px;
+  margin: 0;
+}
+.signupCard .formStack {
+  gap: 14px;
+}
+.accountPage input:not([type="radio"]):not([type="file"]),
+.accountPage textarea {
+  border-radius: 5px;
+  background: #fbfcfd;
+}
+.accountPage .button {
+  border-radius: 5px;
+}
+.accountPage .button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.accountHelp {
+  font-size: 12px;
+  color: #667585;
+  line-height: 1.85;
+  margin: 0;
+}
+.accountBottomLink {
+  text-align: center;
+  color: #667585;
+  font-size: 13px;
+  margin-top: 28px;
+}
+.accountBottomLink a {
+  color: #687582;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.signupSteps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  gap: 12px;
+}
+.signupSteps li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #708092;
+  font-size: 12px;
+  border-top: 2px solid #dce4ed;
+  padding-top: 12px;
+}
+.signupSteps li > span {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  background: #eaf0f6;
+  font-size: 11px;
+}
+.signupSteps .isCurrent {
+  border-color: #687582;
+  color: #687582;
+  font-weight: 700;
+}
+.signupSteps .isCurrent > span {
+  background: #687582;
+  color: #fff;
+}
+.signupSteps .isComplete {
+  border-color: #93acc5;
+  color: #496887;
+}
+.userTypeChoices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 12px 0;
+}
+.typeChoice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 14px;
+  padding: 22px;
+  border: 1px solid #dce4ed;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.typeChoice input {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: auto;
+}
+.typeChoice img {
+  width: 58px;
+  height: 58px;
+}
+.typeChoice > span {
+  font-size: 12px;
+  color: #667585;
+  line-height: 1.8;
+}
+.typeChoice:has(:checked) {
+  outline: 2px solid #687582;
+  background: #f0f5fa;
+}
+.inputHelpRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #667585;
+  font-size: 11px;
+}
+.inputHelpRow > span:last-child {
+  white-space: nowrap;
+}
+.passwordField {
+  display: flex;
+  position: relative;
+}
+.passwordField input {
+  padding-right: 70px;
+  width: 100%;
+}
+.passwordField button {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 52px;
+  min-height: 36px;
+  border: 0;
+  border-radius: 4px;
+  background: #eaf0f6;
+  color: #687582;
+  cursor: pointer;
+  font-size: 12px;
+}
+.signupActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid #e3e9f0;
+  padding-top: 22px;
+  margin-top: 15px;
+}
+.signupActions .primary {
+  min-width: 160px;
+}
+.accountAvatar {
+  display: block;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #dce4ed;
+}
+.signupAvatarRow {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.signupAvatarRow label {
+  min-width: 0;
+  flex: 1;
+  font-size: 13px;
+}
+.signupAvatarRow input {
+  font-size: 12px;
+  max-width: 100%;
+  margin-top: 10px;
+}
+.signupFieldset {
+  min-width: 0;
+  border: 1px solid #dce4ed;
+  border-radius: 6px;
+  padding: 20px;
+}
+.signupFieldset legend {
+  font-size: 14px;
+  padding: 0 8px;
+}
+.themeChoices {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px 10px;
+}
+.themeChoices label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 10px;
+}
+.themeChoices input {
+  position: absolute;
+  top: 0;
+  right: 4px;
+  width: auto;
+  accent-color: #687582;
+}
+.themeSwatch {
+  display: block;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+.themeChoices label:has(:checked) .themeSwatch {
+  outline: 2px solid #687582;
+  outline-offset: 4px;
+}
+.presetIconChoices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.presetIconChoices label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #dce4ed;
+  border-radius: 6px;
+  padding: 15px;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.presetIconChoices input {
+  width: auto;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  accent-color: #687582;
+}
+.presetIconChoices img {
+  width: 60px;
+  height: 60px;
+}
+.presetIconChoices label:has(:checked) {
+  outline: 2px solid #687582;
+  background: #f0f5fa;
+}
+.switchUserType {
+  justify-self: start;
+  border: 0;
+  background: none;
+  padding: 12px 0;
+  text-align: left;
+  color: #687582;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.signupSummary {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 18px;
+  margin: 10px 0;
+  font-size: 14px;
+}
+.signupSummary dt {
+  color: #667585;
+}
+.signupSummary dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.signupSuccess {
+  text-align: center;
+}
+.signupSuccess h1 {
+  margin: 20px 0 12px;
+  font-size: 26px;
+}
+.signupSuccess p {
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.successMark {
+  display: inline-grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #eaf0f6;
+  color: #687582;
+  font-size: 30px;
+}
+.accountBrowseTitle {
+  font-size: 20px;
+  margin: 32px 0 20px;
+}
+.accountPage :focus-visible {
+  outline: 2px solid #687582;
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .profileIdentityWrap {
+    padding-top: 24px;
+  }
+  .profileIdentity {
+    padding-top: 0;
+  }
+  .profileAvatar {
+    margin-top: 0;
+  }
+  .accountPage .container {
+    padding-top: 30px;
+  }
+  .signupCard {
+    padding: 22px 18px;
+  }
+  .signupCard h2 {
+    font-size: 19px;
+  }
+  .signupSteps {
+    gap: 8px;
+  }
+  .signupSteps li {
+    flex-direction: column;
+    align-items: start;
+    font-size: 10px;
+    gap: 7px;
+  }
+  .userTypeChoices {
+    grid-template-columns: 1fr;
+  }
+  .typeChoice {
+    gap: 10px;
+    padding: 18px;
+  }
+  .typeChoice img {
+    width: 45px;
+    height: 45px;
+  }
+  .themeChoices {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px 6px;
+  }
+  .themeChoices input {
+    right: -4px;
+  }
+  .themeChoices label {
+    font-size: 9px;
+  }
+  .signupAvatarRow {
+    flex-direction: column;
+    align-items: start;
+    gap: 14px;
+  }
+  .signupSummary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .signupSummary dd {
+    margin-bottom: 12px;
+  }
+  .signupActions .primary {
+    min-width: 0;
+    flex: 1;
+  }
+  .inputHelpRow {
+    flex-wrap: wrap;
+  }
+}
+.signupActions .button {
+  width: auto;
+}
+.signupActions .button:not(.primary) {
+  flex: 0 0 auto;
+  min-width: 80px;
+}

@@ -1,0 +1,16 @@
+# macOS / editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Local configuration and secrets
+.env
+.env.*
+includes/config.local.php
+
+# Runtime uploads and generated media
+uploads/*
+!uploads/.htaccess
+
+# Local phpMyAdmin dump may contain user records and password hashes
+shotbase.sql

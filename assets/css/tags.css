@@ -1,0 +1,167 @@
+/* タグ色は includes/tag_palette.php に集約。このファイルは共通の形と選択状態を定義。 */
+:root {
+  --tag-bg: #f2f4f6;
+  --tag-fg: #687582;
+  --tag-border: #d6dce2;
+  --tag-selected: #687582;
+  --tag-selected-text: #ffffff;
+}
+:is(
+  .tag,
+  .photoTag,
+  .projectTag,
+  .tagChoice,
+  .tagCheckbox,
+  .tagCheckboxItem,
+  .uploadTagChoice,
+  .profileTagChoice
+) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  padding: 6px 11px;
+  margin: 0;
+  width: auto;
+  max-width: 100%;
+  border-radius: 999px;
+  border: 1px solid var(--tag-border);
+  background: var(--tag-bg);
+  color: var(--tag-fg);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+}
+:is(
+  .tagChoice,
+  .tagCheckbox,
+  .tagCheckboxItem,
+  .uploadTagChoice,
+  .profileTagChoice
+) {
+  position: relative;
+  cursor: pointer;
+}
+.formStack
+  :is(
+    .tagChoice,
+    .tagCheckbox,
+    .tagCheckboxItem,
+    .uploadTagChoice,
+    .profileTagChoice
+  ) {
+  display: inline-flex;
+  gap: 6px;
+}
+:is(
+    .tagChoice,
+    .tagCheckbox,
+    .tagCheckboxItem,
+    .uploadTagChoice,
+    .profileTagChoice
+  )
+  > input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  border: 0;
+  white-space: nowrap;
+}
+:is(
+    .tagChoice,
+    .tagCheckbox,
+    .tagCheckboxItem,
+    .uploadTagChoice,
+    .profileTagChoice
+  )
+  > .tag {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+:is(
+  .tagChoice,
+  .tagCheckbox,
+  .tagCheckboxItem,
+  .uploadTagChoice,
+  .profileTagChoice
+):has(input:checked),
+:is(.projectTag.is-active, .tag.isActive),
+.popularTagList .isActive .tag {
+  color: var(--tag-selected-text);
+  background: var(--tag-selected);
+  border-color: var(--tag-selected);
+}
+:is(
+  .tagChoice,
+  .tagCheckbox,
+  .tagCheckboxItem,
+  .uploadTagChoice,
+  .profileTagChoice
+):has(input:focus-visible),
+:is(.tag, .photoTag, .projectTag):focus-visible {
+  outline: 3px solid #8bafcf;
+  outline-offset: 3px;
+}
+:is(
+  .tagChoice,
+  .tagCheckbox,
+  .tagCheckboxItem,
+  .uploadTagChoice,
+  .profileTagChoice
+):has(input:disabled) {
+  opacity: 0.5;
+  cursor: default;
+}
+.tagUseCount,
+.projectTagCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  min-width: 20px;
+  border-radius: 999px;
+  background: #ffffff55;
+  color: inherit;
+  font-size: 10px;
+}
+.tagList,
+.photoTags,
+.projectTagList,
+.tagCheckboxList {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.popularTagList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 3px 4px 10px;
+  max-width: 100%;
+}
+.popularTagList li {
+  flex: 0 0 auto;
+  margin: 0;
+}
+.popularTagList a {
+  display: inline-flex;
+  justify-content: flex-start;
+}
+.popularTagList .tag {
+  display: inline-flex;
+  gap: 6px;
+  padding: 6px 11px;
+  font-size: 12px;
+}
