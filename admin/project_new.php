@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     trim($_POST['description'] ?? '');
 
   $visibility =
-    $_POST['visibility'] ?? 'draft';
+    $_POST['visibility'] ?? 'public';
 
   $selectedDefaultTagIds =
     $_POST['default_tag_ids'] ?? [];
@@ -191,7 +191,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // ---------------------------------
 
   $allowedVisibility = [
-    'draft',
     'private',
     'public'
   ];
@@ -202,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     true
   )) {
 
-    $visibility = 'draft';
+    $visibility = 'public';
   }
 
   // ---------------------------------
@@ -688,21 +687,6 @@ require_once __DIR__ . '/../includes/header.php';
       <legend>
         公開設定
       </legend>
-
-      <label>
-
-        <input
-          type="radio"
-          name="visibility"
-          value="draft"
-          <?= $visibility === 'draft'
-            ? 'checked'
-            : '' ?>
-        >
-
-        下書き
-
-      </label>
 
       <label>
 

@@ -377,7 +377,7 @@ require_once __DIR__ . '/includes/header.php';
         </div>
       <?php endif; ?>
       <?php if ($isOwner): ?>
-        <p class="accountHelp">下書き・非公開は自分だけに表示されます。各プロジェクトから写真を追加・編集できます。</p>
+        <p class="accountHelp">非公開のプロジェクトは自分だけに表示されます。各プロジェクトから写真を追加・編集できます。</p>
         <a class="profileProjectRow projectCreateRow" href="<?= BASE_URL ?>/admin/project_new.php">
           <span class="projectCoverLink projectCreateThumb" aria-hidden="true">＋</span>
           <span class="projectSummary"><strong>新しいプロジェクトを作成</strong><span class="accountHelp">撮影の記録を、新しいアルバムに。</span></span>
@@ -425,7 +425,7 @@ require_once __DIR__ . '/includes/header.php';
             <?php endif; ?>
             <div class="projectRowMeta">
               <span><?= (int) $project[ 'photo_count' ] ?> 写真</span>
-              <?php if ($isOwner): ?><span class="visibilityPill"><?= ['public' => '公開', 'private' => '非公開', 'draft' => '下書き'][$project['visibility']] ?></span><a class="textLink" href="<?= BASE_URL ?>/admin/project.php?id=<?= (int)$project['id'] ?>">編集・写真を追加</a><?php endif; ?>
+              <?php if ($isOwner): ?><span class="visibilityPill"><?= ['public' => '公開', 'private' => '非公開'][$project['visibility']] ?? '非公開' ?></span><a class="textLink" href="<?= BASE_URL ?>/admin/project.php?id=<?= (int)$project['id'] ?>">編集・写真を追加</a><?php endif; ?>
               <?php if (!$guestPreview && currentUserId() !== null && $project['visibility'] === 'public'): ?>
                 <form
                   method="post"

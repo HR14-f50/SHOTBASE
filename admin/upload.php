@@ -73,7 +73,7 @@ require_once __DIR__ . '/../includes/header.php';
       <button class="button primary" type="submit" id="submitPhotos" disabled>写真をアップロード</button>
       <a class="button" href="<?= BASE_URL ?>/admin/project.php?id=<?= $projectId ?>">登録済みの写真を見る</a>
     </div>
-    <p class="uploadSaveNote">写真は「公開」で保存されます。プロジェクトが下書き・非公開の場合、写真も外部には表示されません。</p>
+    <p class="uploadSaveNote">写真は「公開」で保存されます。プロジェクトが非公開の場合、写真も外部には表示されません。</p>
     <p class="uploadSaveNote">圧縮前の元ファイルは保存されません。お手元の写真はそのまま保管してください。</p>
   </form>
 </section>

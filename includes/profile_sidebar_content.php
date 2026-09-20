@@ -37,7 +37,7 @@
     <?php if ($user['bio']): ?>
       <p class="profileBio" ><?= h(preg_replace('/\R/u', ' ', mb_substr($user['bio'], 0, 200))) ?></p>
     <?php endif; ?>
-    <p class="profileStats">
+    <?php if (empty($compactSidebar)): ?><p class="profileStats">
       <span>
         <strong><?= $totalProjects ?></strong>
         プロジェクト
@@ -46,10 +46,10 @@
         <strong><?= $totalPhotos ?></strong>
         写真
       </span>
-    </p>
+    </p><?php endif; ?>
   </div>
 </section>
-    <section class="sidebarSection <?= isset($sidebarProjectTags) ? 'projectTagsSection' : 'popularTagsSection' ?>">
+    <?php if (empty($compactSidebar)): ?><section class="sidebarSection <?= isset($sidebarProjectTags) ? 'projectTagsSection' : 'popularTagsSection' ?>">
       <?php if (isset($sidebarProjectTags)): ?>
         <h2>このプロジェクトのタグ</h2>
         <?php renderTagFilter($sidebarProjectTags, $sidebarSelectedTags, $sidebarAction, $sidebarHidden); ?>
@@ -59,4 +59,4 @@
           <?php renderTagFilter($popularTags, $tagIds ?? [], BASE_URL . '/profile.php', ['username' => $username] + array_diff_key($filters, ['tags' => 1, 'tag' => 1]), '#projects'); ?>
         </details>
       <?php endif; ?>
-    </section>
+    </section><?php endif; ?>

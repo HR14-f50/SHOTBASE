@@ -26,6 +26,9 @@ if (bulk) {
   const photos = [...bulk.querySelectorAll('[name="photos[]"]')];
   const update = () => { bulk.querySelector('[data-photo-selection]').textContent = `${photos.filter(p=>p.checked).length}枚選択中`; };
   bulk.addEventListener('change', update);
+  bulk.addEventListener('submit', (event) => {
+    if (event.submitter?.value === 'bulk_delete' && !window.confirm('選択した写真を削除しますか？この操作は取り消せません。')) event.preventDefault();
+  });
   bulk.querySelector('[data-select-photos]').addEventListener('click', () => {
     const checked = !photos.every(p=>p.checked);
     photos.forEach(p=>{p.checked=checked;});

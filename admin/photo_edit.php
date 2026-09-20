@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selected = array_values(array_unique(array_map('intval', (array)($_POST['tag_ids'] ?? []))));
     $newTag = trim((string)($_POST['new_tag_name'] ?? ''));
     if (mb_strlen($photo['caption']) > 1000) $errors[] = 'キャプションは1000文字以内にしてください。';
-    if (!in_array($photo['visibility'], ['public', 'private', 'draft'], true)) $errors[] = '公開状態を選択してください。';
+    if (!in_array($photo['visibility'], ['public', 'private'], true)) $errors[] = '公開状態を選択してください。';
     if ($position !== 'default' && !isset(watermarkPositions()[$position])) $errors[] = 'ウォーターマークの位置を選択してください。';
     if (array_diff($selected, array_map('intval', array_column($tags, 'id')))) $errors[] = '選択できないタグが含まれています。';
     $newNames = [];
@@ -111,8 +111,8 @@ require __DIR__ . '/../includes/header.php';
     <section class="settingsCard formStack">
       <h2>写真の情報</h2>
       <label>キャプション<textarea name="caption" rows="5" maxlength="1000"><?= h($photo['caption']) ?></textarea></label>
-      <label>公開状態<select name="visibility"><?php foreach (['public', 'private', 'draft'] as $visibility): ?><option value="<?= h($visibility) ?>" <?= $photo['visibility'] === $visibility ? 'selected' : '' ?>><?= h(visibilityName($visibility)) ?></option><?php endforeach; ?></select></label>
-      <p class="accountHelp">写真が公開でも、プロジェクトが下書き・非公開の場合は外部に表示されません。</p>
+      <label>公開状態<select name="visibility"><?php foreach (['public', 'private'] as $visibility): ?><option value="<?= h($visibility) ?>" <?= $photo['visibility'] === $visibility ? 'selected' : '' ?>><?= h(visibilityName($visibility)) ?></option><?php endforeach; ?></select></label>
+      <p class="accountHelp">写真が公開でも、プロジェクトが非公開の場合は外部に表示されません。</p>
     </section>
     <section class="settingsCard formStack">
       <h2>タグ</h2>

@@ -27,6 +27,9 @@
 .popularTagsDisclosure .tagFilterForm .projectTagList { scrollbar-width: thin; }
 .bulkPhotoChoice { display: flex; align-items: center; gap: 6px; font-size: 11px; padding: 8px; }
 .bulkPhotoChoice input { width: auto; }
+.bulkPhotoActions { align-items: center; flex-wrap: wrap; }
+.bulkPhotoActions label { display: inline-flex; align-items: center; gap: 6px; margin: 0; }
+.bulkPhotoActions select { min-height: 38px; width: auto; }
 .managePhotoCard:has(.bulkPhotoChoice input:checked) { outline: 3px solid var(--profile-accent, #687582); }
 .personalTheme { --accent: var(--profile-accent); --accent-soft: var(--profile-soft); }
 .personalTheme .siteHeader,

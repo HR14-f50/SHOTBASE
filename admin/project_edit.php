@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $title = trim($_POST['title'] ?? '');
   $shootingDate = trim($_POST['shooting_date'] ?? '');
   $description = trim($_POST['description'] ?? '');
-  $visibility = $_POST['visibility'] ?? 'draft';
+  $visibility = $_POST['visibility'] ?? 'private';
 
   // ---------------------------------
   // バリデーション
@@ -87,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   $allowedVisibility = [
-    'draft',
     'private',
     'public'
   ];
@@ -255,19 +254,6 @@ require_once __DIR__ . '/../includes/header.php';
       <legend>
         公開設定
       </legend>
-
-      <label>
-
-        <input
-          type="radio"
-          name="visibility"
-          value="draft"
-          <?= $visibility === 'draft' ? 'checked' : '' ?>
-        >
-
-        下書き
-
-      </label>
 
       <label>
 

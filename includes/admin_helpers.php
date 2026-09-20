@@ -4,7 +4,7 @@ require_once __DIR__ . '/profile_helpers.php';
 
 function visibilityName(string $value): string
 {
-  return ['public' => '公開', 'private' => '非公開', 'draft' => '下書き'][$value] ?? '下書き';
+  return ['public' => '公開', 'private' => '非公開'][$value] ?? '非公開';
 }
 
 function ownedProject(int $id, int $userId): array

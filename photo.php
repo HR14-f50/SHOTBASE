@@ -64,6 +64,13 @@ if (!$photo) {
   exit;
 }
 
+$stmt = db()->prepare('SELECT ph.id FROM photos ph JOIN projects pr ON pr.id = ph.project_id WHERE ph.project_id = ? AND ph.user_id = ? AND ph.visibility = "public" AND pr.visibility = "public" ORDER BY ph.created_at DESC, ph.id DESC');
+$stmt->execute([(int)$photo['project_id'], (int)$photo['user_id']]);
+$photoIds = array_map('intval', $stmt->fetchAll(PDO::FETCH_COLUMN));
+$photoIndex = array_search($id, $photoIds, true);
+$previousPhotoId = $photoIndex === false ? null : ($photoIds[$photoIndex - 1] ?? null);
+$nextPhotoId = $photoIndex === false ? null : ($photoIds[$photoIndex + 1] ?? null);
+
 // -------------------------------------
 // 写真についているタグ取得
 // -------------------------------------
@@ -97,7 +104,7 @@ require_once __DIR__ . '/includes/header.php';
 ?>
 
 <div class="profileLayout publicDetailLayout">
-  <?php renderPublicSidebar((int)$photo['user_id'], $guestPreview); ?>
+  <?php renderPublicSidebar((int)$photo['user_id'], $guestPreview, null, [], 0, false, true); ?>
   <div class="profileAreaC">
 <section class="photoDetail">
 
@@ -126,6 +133,12 @@ require_once __DIR__ . '/includes/header.php';
     >
 
   </div>
+
+  <nav class="photoPager" aria-label="プロジェクト内の写真">
+    <?php if ($previousPhotoId): ?><a class="button" rel="prev" href="<?= BASE_URL ?>/photo.php?id=<?= $previousPhotoId ?><?= $guestPreview ? '&amp;preview=guest' : '' ?>">← 前の写真</a><?php else: ?><span class="button isDisabled" aria-disabled="true">← 前の写真</span><?php endif; ?>
+    <span><?= $photoIndex === false ? '' : ((string)($photoIndex + 1) . ' / ' . count($photoIds)) ?></span>
+    <?php if ($nextPhotoId): ?><a class="button" rel="next" href="<?= BASE_URL ?>/photo.php?id=<?= $nextPhotoId ?><?= $guestPreview ? '&amp;preview=guest' : '' ?>">次の写真 →</a><?php else: ?><span class="button isDisabled" aria-disabled="true">次の写真 →</span><?php endif; ?>
+  </nav>
 
   <!-- キャプション -->
   <?php if (!empty($photo['caption'])): ?>

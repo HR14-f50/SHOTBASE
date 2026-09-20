@@ -6,7 +6,7 @@
 -- users -> projects -> photos
 -- photos <-> tags
 -- baseball_divisions -> teams
--- photos can be draft/private/public
+-- photos can be private/public
 -- Project photo limit: 200
 -- Per-photo upload limit: 2MB (application-level validation)
 -- Max long side: 2000px (application-level resize)
@@ -100,8 +100,8 @@ CREATE TABLE photos (
     height INT UNSIGNED NOT NULL,
     file_size INT UNSIGNED NOT NULL,
 
-    -- draft / private / public
-    visibility ENUM('draft', 'private', 'public') NOT NULL DEFAULT 'draft',
+    -- private / public
+    visibility ENUM('private', 'public') NOT NULL DEFAULT 'public',
 
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

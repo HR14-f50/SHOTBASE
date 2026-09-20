@@ -3,13 +3,14 @@ declare(strict_types=1);
 require_once __DIR__ . '/profile_helpers.php';
 
 /** 公開詳細ページでは、所有者であっても公開データだけを集計します。 */
-function renderPublicSidebar(int $userId, bool $guestPreview, ?array $projectTags = null, array $selected = [], int $projectId = 0, bool $admin = false): void
+function renderPublicSidebar(int $userId, bool $guestPreview, ?array $projectTags = null, array $selected = [], int $projectId = 0, bool $admin = false, bool $compact = false): void
 {
   $stmt = db()->prepare('SELECT * FROM users WHERE id = ?');
   $stmt->execute([$userId]);
   $user = $stmt->fetch();
   if (!$user) return;
   $username = $user['username'];
+  $compactSidebar = $compact;
   $isOwner = false;
   if ($projectTags !== null) {
     $sidebarProjectTags = $projectTags;

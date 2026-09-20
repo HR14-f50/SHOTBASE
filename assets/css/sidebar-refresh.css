@@ -89,7 +89,8 @@
   .profileLayout { grid-template-columns: minmax(0, 1fr); padding-top: 14px; }
   .profileAreaB { border-right: 0; padding-right: 0; }
   .profileAreaB .profileAreaA { margin-bottom: 14px; }
-  .profileAreaB .profileNameBlock { flex-basis: auto; }
+  .profileAreaB .profileIdentity { align-items: center; }
+  .profileAreaB .profileNameBlock { flex: 1 1 0; min-width: 0; }
   .profileAreaB .profileEditButton,
   .profileAreaB .profileGuestButton { width: auto; }
   .pickupGallery { height: 150px; }
