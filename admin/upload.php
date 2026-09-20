@@ -58,7 +58,7 @@ require_once __DIR__ . '/../includes/header.php';
       <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
       <div class="tagList" data-tag-list>
         <?php foreach ($tags as $tag): ?>
-          <label class="uploadTagChoice" style="<?= h(profileTagStyle($tag)) ?>">
+          <label class="uploadTagChoice" data-tag-reading="<?= h($tag['reading'] ?? '') ?>" style="<?= h(profileTagStyle($tag)) ?>">
             <input type="checkbox" name="tag_ids[]" value="<?= (int)$tag['id'] ?>" <?= in_array((int)$tag['id'], $defaultTags, true) ? 'checked' : '' ?>>
             <span class="tag" style="<?= h(profileTagStyle($tag)) ?>">#<?= h($tag['name']) ?></span>
           </label>

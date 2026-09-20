@@ -184,7 +184,7 @@ $message = flash('profile_saved');
       <p class="accountHelp">合計10個まで選べます。<?= !$photographer ? '閲覧限定会員のタグはアカウント画面に表示され、公開プロフィールは作成されません。' : '' ?></p>
       <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
       <div class="tagList">
-        <?php foreach ($tags as $tag): ?><label class="profileTagChoice" style="<?= h(profileTagStyle($tag)) ?>"><input type="checkbox" name="profile_tags[]" value="<?= (int)$tag['id'] ?>" <?= in_array((int)$tag['id'], $selectedTags, true) ? 'checked' : '' ?>><span class="tag" style="<?= h(profileTagStyle($tag)) ?>">#<?= h($tag['name']) ?></span></label><?php endforeach; ?>
+        <?php foreach ($tags as $tag): ?><label class="profileTagChoice" data-tag-reading="<?= h($tag['reading'] ?? '') ?>" style="<?= h(profileTagStyle($tag)) ?>"><input type="checkbox" name="profile_tags[]" value="<?= (int)$tag['id'] ?>" <?= in_array((int)$tag['id'], $selectedTags, true) ? 'checked' : '' ?>><span class="tag" style="<?= h(profileTagStyle($tag)) ?>">#<?= h($tag['name']) ?></span></label><?php endforeach; ?>
       </div>
       <label>新しいタグ<input name="new_tags" value="<?= h($newTags) ?>" maxlength="1000" placeholder="例：球場巡り、ナイター"></label>
       <p class="accountHelp">複数のタグは「、」または「,」で区切ってください。</p>

@@ -12,9 +12,7 @@
 `shotbase_database.sql` を phpMyAdmin からインポートしてください。
 
 ## 2. DB接続
-`SHOTBASE_DB_HOST`、`SHOTBASE_DB_NAME`、`SHOTBASE_DB_USER`、`SHOTBASE_DB_PASS` をWebサーバーまたはPHP-FPMの環境変数に設定します。MAMP/XAMPPのローカル環境では、利用中のMariaDB設定に合わせて設定してください。公開リポジトリにパスワードを書き込まないでください。
-
-サブディレクトリで動かす場合は `SHOTBASE_BASE_URL` も設定します（例: `/shotbase`）。
+`includes/config.php` を開き、XAMPPのMariaDB設定に合わせて変更します。
 
 ## 3. 初期ユーザー
 `register.php` から最初のユーザーを登録できます。
@@ -109,5 +107,5 @@
 最新のプロジェクト管理・タグ制限・テーマ仕様は [管理・検索更新ガイド](docs/project-refresh.md) を参照してください。
 
 ## 運営タグとタグ検索（2026-09-20）
-チーム・区分・大会・ファイターズ選手の初期タグは `migrations/20260920_operator_tags.sql` にまとめています。適用方法とチームカラーの変更箇所は [運営タグガイド](docs/operator-tags.md) を参照してください。
+チーム・区分・大会・ファイターズ選手の初期タグは `migrations/20260920_operator_tags.sql`、選手のふりがなは `migrations/20260920_fighters_readings.sql` にまとめています。適用方法とチームカラーの変更箇所は [運営タグガイド](docs/operator-tags.md) を参照してください。
 写真アップロード、写真編集、プロジェクト作成、一括タグ付与、プロフィール編集にはタグ検索欄があります。

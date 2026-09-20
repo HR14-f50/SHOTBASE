@@ -23,6 +23,7 @@ export SHOTBASE_DB_PASS=your_db_password
 ## 選手名の更新
 
 ファイターズの選手名は同じマイグレーションの `tag_type = 'player'` の登録部分にあります。公式名鑑の更新に合わせて、追加・削除・表記変更を行ってください。
+ふりがなは `migrations/20260920_fighters_readings.sql` の `reading` 列へ登録しています。タグ検索では選手名だけでなく、このふりがなでも検索できます。
 
 ## タグ検索
 

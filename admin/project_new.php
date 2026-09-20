@@ -20,6 +20,7 @@ $stmt = db()->prepare('
     id,
     name,
     tag_type,
+    reading,
     border_color,
     background_color
   FROM tags
@@ -690,6 +691,7 @@ require_once __DIR__ . '/../includes/header.php';
             <span class="tagManageItem">
               <label
                 class="tagCheckboxItem"
+                data-tag-reading="<?= h($tag['reading'] ?? '') ?>"
                 style="<?= h(profileTagStyle($tag)) ?>"
               >
 
