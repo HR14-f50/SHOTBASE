@@ -25,16 +25,18 @@
         <p>@<?= h($user['username']) ?></p>
       </div>
       <?php if ($isOwner): ?>
-        <a
-          class="button profileEditButton"
-          href="<?= BASE_URL ?>/admin/profile_edit.php"
-        >
-          プロフィールを編集
-        </a>
-        <a class="button profileGuestButton" href="<?= h(profileUrl($username, ['preview' => 'guest'])) ?>" target="_blank" rel="noopener">訪問者表示をプレビュー ↗</a>
+        <div class="profileActions">
+          <a
+            class="button profileEditButton"
+            href="<?= BASE_URL ?>/admin/profile_edit.php"
+          >
+            プロフィールを編集
+          </a>
+          <a class="button profileGuestButton" href="<?= h(profileUrl($username, ['preview' => 'guest'])) ?>" target="_blank" rel="noopener">訪問者表示をプレビュー ↗</a>
+        </div>
       <?php endif; ?>
     </div>
-    <?php if ($user['bio']): ?>
+    <?php if ($user['bio'] && (!isset($compactSidebar) || !$compactSidebar)): ?>
       <p class="profileBio" ><?= h(preg_replace('/\R/u', ' ', mb_substr($user['bio'], 0, 200))) ?></p>
     <?php endif; ?>
     <?php if (empty($compactSidebar)): ?><p class="profileStats">
@@ -54,7 +56,7 @@
         <h2>このプロジェクトのタグ</h2>
         <?php renderTagFilter($sidebarProjectTags, $sidebarSelectedTags, $sidebarAction, $sidebarHidden); ?>
       <?php else: ?>
-        <details class="popularTagsDisclosure" data-popular-tags open>
+        <details class="popularTagsDisclosure" data-popular-tags>
           <summary>よく投稿するタグ</summary>
           <?php renderTagFilter($popularTags, $tagIds ?? [], BASE_URL . '/profile.php', ['username' => $username] + array_diff_key($filters, ['tags' => 1, 'tag' => 1]), '#projects'); ?>
         </details>

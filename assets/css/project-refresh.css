@@ -47,7 +47,7 @@
 .themeSwatches input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .themeSwatches span { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; border: 3px solid #fff; box-shadow: 0 0 0 1px #b5bdc5; }
 .themeSwatches input:checked + span { outline: 3px solid var(--profile-accent); outline-offset: 3px; }
-.themeSwatches input:checked + span::after { content: '✓'; color: #fff; }
+.themeSwatches input:checked + span::after { content: ''; color: #fff; }
 .themeSwatches input:focus-visible + span { outline: 3px solid #111; outline-offset: 3px; }
 .themeSwatches small { font-size: 11px; }
 .fixedField { display: grid; gap: 8px; }
@@ -73,10 +73,30 @@
     order: 2;
     position: static;
     inset: auto;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 38px;
     height: auto;
-    justify-content: center;
-    gap: 10px;
-    padding: 7px 0 0;
+    justify-content: space-between;
+    gap: 0;
+    margin: 0;
+    padding: 4px 6px;
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 8px 8px;
+    background: var(--profile-soft, #f4f6f8);
   }
-  :is(.projectPublicPage, .publicProfilePage) .pickupSlider .sliderControls button { opacity: 1; transform: none; width: 42px; height: 34px; }
+  :is(.projectPublicPage, .publicProfilePage) .pickupSlider .sliderControls button {
+    opacity: 1;
+    transform: none;
+    flex: 1 1 50%;
+    width: auto;
+    height: 30px;
+    border: 0;
+    border-radius: 4px;
+    box-shadow: none;
+    background: transparent;
+    color: var(--profile-accent, #687582);
+  }
+  :is(.projectPublicPage, .publicProfilePage) .pickupSlider .sliderControls button + button { border-left: 1px solid var(--line); }
 }
