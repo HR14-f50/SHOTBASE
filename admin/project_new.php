@@ -679,6 +679,8 @@ require_once __DIR__ . '/../includes/header.php';
         自動的に付けるタグです。
       </p>
 
+      <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
+
       <?php if ($tags): ?>
 
         <div class="tagCheckboxList" data-tag-list data-tag-delete="<?= BASE_URL ?>/admin/tag_delete.php" data-tag-input-name="default_tag_ids[]">

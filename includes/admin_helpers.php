@@ -52,11 +52,14 @@ function validatePhotoTags(int $userId, array $ids): array
   $ids = array_values(array_unique(array_map('intval', $ids)));
   if (count($ids) > 10) throw new RuntimeException('1枚の写真に付けられるタグは10件までです。');
   if (!$ids) return [];
-  $stmt = db()->prepare('SELECT id, name FROM tags WHERE id IN (' . implode(',', array_fill(0, count($ids), '?')) . ') AND (user_id = ? OR user_id IS NULL)');
+  $stmt = db()->prepare('SELECT id, name, user_id, tag_type FROM tags WHERE id IN (' . implode(',', array_fill(0, count($ids), '?')) . ') AND (user_id = ? OR user_id IS NULL)');
   $stmt->execute([...$ids, $userId]);
   $rows = $stmt->fetchAll();
   if (count($rows) !== count($ids)) throw new RuntimeException('選択できないタグが含まれています。');
-  foreach ($rows as $row) if (mb_strlen($row['name']) > 12) throw new RuntimeException('タグは12文字以内のものを選んでください。');
+  foreach ($rows as $row) {
+    // 運営タグ（user_id=NULL）は、公式大会名など12文字を超える名称を許可します。
+    if ($row['user_id'] !== null && mb_strlen($row['name']) > 12) throw new RuntimeException('タグは12文字以内のものを選んでください。');
+  }
   return $ids;
 }
 

@@ -117,6 +117,7 @@ require __DIR__ . '/../includes/header.php';
     <section class="settingsCard formStack">
       <h2>タグ</h2>
       <p class="accountHelp">タグは最大10件、各12文字以内です。選択を外すとこの写真から解除されます。今回の編集で追加した未使用タグだけ×で削除できます。</p>
+      <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
       <div class="tagList" data-tag-list data-tag-delete="<?= BASE_URL ?>/admin/tag_delete.php"><?php foreach ($tags as $tag): ?><span class="tagManageItem"><label class="tagCheckbox" style="<?= h(profileTagStyle($tag)) ?>"><input type="checkbox" name="tag_ids[]" value="<?= (int)$tag['id'] ?>" <?= in_array((int)$tag['id'], $selected, true) ? 'checked' : '' ?>><span class="tag" style="<?= h(profileTagStyle($tag)) ?>">#<?= h($tag['name']) ?></span></label><?php if (in_array((int)$tag['id'], $_SESSION['tag_edit_sessions'][$editToken]['created'], true)): ?><button type="button" class="tagDeleteButton" data-delete-tag="<?= (int)$tag['id'] ?>" data-tag-name="<?= h($tag['name']) ?>" aria-label="<?= h($tag['name']) ?>を登録タグから削除">×</button><?php endif; ?></span><?php endforeach; ?></div>
       <?php require __DIR__ . '/../includes/tag_create_ui.php'; ?>
     </section>

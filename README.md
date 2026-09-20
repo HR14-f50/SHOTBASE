@@ -11,11 +11,6 @@
 ## 1. DB
 `shotbase_database.sql` を phpMyAdmin からインポートしてください。
 
-## GitHubから取得した場合
-このリポジトリにはアプリケーションのソース、DBスキーマ、マイグレーションを含めています。利用前に `includes/config.php` のDB接続先を自分の環境へ合わせてください。
-
-アップロード画像とローカル用のDBダンプはリポジトリに含めていません。`uploads/` 配下は書き込み可能にし、`shotbase_database.sql` と `migrations/` を順番に適用してください。
-
 ## 2. DB接続
 `SHOTBASE_DB_HOST`、`SHOTBASE_DB_NAME`、`SHOTBASE_DB_USER`、`SHOTBASE_DB_PASS` をWebサーバーまたはPHP-FPMの環境変数に設定します。MAMP/XAMPPのローカル環境では、利用中のMariaDB設定に合わせて設定してください。公開リポジトリにパスワードを書き込まないでください。
 
@@ -112,3 +107,7 @@
 最新のサイドバー・タグ・アイコン操作は [画面更新ガイド](docs/sidebar-refresh.md) を参照してください。
 
 最新のプロジェクト管理・タグ制限・テーマ仕様は [管理・検索更新ガイド](docs/project-refresh.md) を参照してください。
+
+## 運営タグとタグ検索（2026-09-20）
+チーム・区分・大会・ファイターズ選手の初期タグは `migrations/20260920_operator_tags.sql` にまとめています。適用方法とチームカラーの変更箇所は [運営タグガイド](docs/operator-tags.md) を参照してください。
+写真アップロード、写真編集、プロジェクト作成、一括タグ付与、プロフィール編集にはタグ検索欄があります。

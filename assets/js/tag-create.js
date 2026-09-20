@@ -53,6 +53,7 @@ document.querySelectorAll('[data-tag-create]').forEach((area) => {
         }
         if (list.querySelectorAll('input:checked').length < 10) checkbox.checked = true;
       });
+      list.dispatchEvent(new Event('taglistchange'));
       input.value = '';
       message.textContent = `${tags.length}個のタグを追加しました。写真には最大10件まで選択されます。`;
     } catch (error) {

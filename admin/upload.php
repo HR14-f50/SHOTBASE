@@ -55,6 +55,7 @@ require_once __DIR__ . '/../includes/header.php';
     <ul id="photoQueue" class="photoQueue" aria-label="アップロード予定の写真"></ul>
     <fieldset class="uploadTags" id="uploadTags">
       <legend>今回の写真すべてに付けるタグ</legend>
+      <?php require __DIR__ . '/../includes/tag_search_ui.php'; ?>
       <div class="tagList" data-tag-list>
         <?php foreach ($tags as $tag): ?>
           <label class="uploadTagChoice" style="<?= h(profileTagStyle($tag)) ?>">
