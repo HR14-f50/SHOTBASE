@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } else { http_response_code(400); exit('操作が正しくありません。'); }
   redirect('admin/photo.php?id=' . $id . '&cover_saved=1');
 }
-$stmt = db()->prepare('SELECT t.* FROM photo_tags pt JOIN tags t ON t.id = pt.tag_id WHERE pt.photo_id = ? ORDER BY t.name');
+$stmt = db()->prepare('SELECT t.*, tm.name AS team_name, tm.border_color AS team_border_color, tm.background_color AS team_background_color FROM photo_tags pt JOIN tags t ON t.id = pt.tag_id LEFT JOIN teams tm ON tm.id = t.team_id WHERE pt.photo_id = ? ORDER BY t.name');
 $stmt->execute([$id]);
 $tags = $stmt->fetchAll();
 $stmt = db()->prepare('SELECT id FROM photos WHERE project_id = ? AND user_id = ? ORDER BY created_at DESC, id DESC');

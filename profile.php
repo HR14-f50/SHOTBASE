@@ -98,13 +98,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'save_
 }
 
 $stmt = db()->prepare('
-  SELECT t.id, t.name, t.tag_type, t.border_color, t.background_color, COUNT(DISTINCT ph.id) AS use_count
+  SELECT t.id, t.name, t.tag_type, t.user_id, t.team_id, t.border_color, t.background_color,
+    tm.border_color AS team_border_color, tm.background_color AS team_background_color,
+    COUNT(DISTINCT ph.id) AS use_count
   FROM tags t JOIN photo_tags pt ON pt.tag_id = t.id
+  LEFT JOIN teams tm ON tm.id = t.team_id
   JOIN photos ph ON ph.id = pt.photo_id
   JOIN projects p ON p.id = ph.project_id
   WHERE p.user_id = ? AND ph.user_id = p.user_id
     AND (' . ($isOwner ? '1 = 1' : 'p.visibility = "public" AND ph.visibility = "public"') . ')
-  GROUP BY t.id, t.name, t.tag_type, t.border_color, t.background_color
+  GROUP BY t.id, t.name, t.tag_type, t.user_id, t.team_id, t.border_color, t.background_color, tm.border_color, tm.background_color
   ORDER BY use_count DESC, t.name ASC LIMIT 20
 ');
 $stmt->execute([$userId]);

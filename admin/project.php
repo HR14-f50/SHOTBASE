@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 $tagIds = selectedTagIds();
-$stmt = db()->prepare('SELECT t.*, COUNT(DISTINCT ph.id) AS use_count FROM tags t JOIN photo_tags pt ON pt.tag_id = t.id JOIN photos ph ON ph.id = pt.photo_id WHERE ph.project_id = ? AND ph.user_id = ? GROUP BY t.id ORDER BY use_count DESC, t.name');
+$stmt = db()->prepare('SELECT t.*, tm.name AS team_name, tm.border_color AS team_border_color, tm.background_color AS team_background_color, COUNT(DISTINCT ph.id) AS use_count FROM tags t JOIN photo_tags pt ON pt.tag_id = t.id JOIN photos ph ON ph.id = pt.photo_id LEFT JOIN teams tm ON tm.id = t.team_id WHERE ph.project_id = ? AND ph.user_id = ? GROUP BY t.id ORDER BY use_count DESC, t.name');
 $stmt->execute([$id, $userId]);
 $projectTags = $stmt->fetchAll();
 $sql = 'SELECT ph.* FROM photos ph WHERE ph.project_id = ? AND ph.user_id = ?';

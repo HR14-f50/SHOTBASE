@@ -8,7 +8,7 @@ $user = $stmt->fetch();
 if (!$user) { logoutUser(); redirect('login.php'); }
 $stmt = db()->query('SELECT u.username, u.nickname FROM users u WHERE u.user_type = "photographer" AND EXISTS (SELECT 1 FROM projects p WHERE p.user_id = u.id AND p.visibility = "public") ORDER BY u.id DESC LIMIT 12');
 $creators = $stmt->fetchAll();
-$stmt = db()->prepare('SELECT t.* FROM user_profile_tags upt JOIN tags t ON t.id = upt.tag_id WHERE upt.user_id = ? ORDER BY upt.sort_order');
+$stmt = db()->prepare('SELECT t.*, tm.name AS team_name, tm.border_color AS team_border_color, tm.background_color AS team_background_color FROM user_profile_tags upt JOIN tags t ON t.id = upt.tag_id LEFT JOIN teams tm ON tm.id = t.team_id WHERE upt.user_id = ? ORDER BY upt.sort_order');
 $stmt->execute([$userId]);
 $accountTags = $stmt->fetchAll();
 $pageTitle = 'アカウント';

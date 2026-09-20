@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/includes/profile_helpers.php';
 $tagIds = selectedTagIds();
-$stmt = db()->query('SELECT t.*, COUNT(DISTINCT ph.id) AS use_count FROM tags t JOIN photo_tags pt ON pt.tag_id = t.id JOIN photos ph ON ph.id = pt.photo_id JOIN projects p ON p.id = ph.project_id WHERE ph.visibility = "public" AND p.visibility = "public" AND p.user_id = ph.user_id GROUP BY t.id ORDER BY use_count DESC, t.name');
+$stmt = db()->query('SELECT t.*, tm.name AS team_name, tm.border_color AS team_border_color, tm.background_color AS team_background_color, COUNT(DISTINCT ph.id) AS use_count FROM tags t JOIN photo_tags pt ON pt.tag_id = t.id JOIN photos ph ON ph.id = pt.photo_id JOIN projects p ON p.id = ph.project_id LEFT JOIN teams tm ON tm.id = t.team_id WHERE ph.visibility = "public" AND p.visibility = "public" AND p.user_id = ph.user_id GROUP BY t.id ORDER BY use_count DESC, t.name');
 $tags = $stmt->fetchAll();
 $photos = [];
 if ($tagIds) {

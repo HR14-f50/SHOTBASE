@@ -76,10 +76,14 @@ $stmt = db()->prepare('
     t.division_id,
     t.team_id,
     t.border_color,
-    t.background_color
+    t.background_color,
+    tm.border_color AS team_border_color,
+    tm.background_color AS team_background_color
   FROM photo_tags pt
   INNER JOIN tags t
     ON t.id = pt.tag_id
+  LEFT JOIN teams tm
+    ON tm.id = t.team_id
   WHERE pt.photo_id = ?
   ORDER BY t.name ASC
 ');

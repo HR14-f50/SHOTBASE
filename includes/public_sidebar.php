@@ -19,7 +19,7 @@ function renderPublicSidebar(int $userId, bool $guestPreview, ?array $projectTag
   }
   $tagId = 0;
   $filters = $guestPreview ? ['preview' => 'guest'] : [];
-  $stmt = db()->prepare('SELECT t.id, t.name, t.tag_type, COUNT(DISTINCT ph.id) AS use_count FROM tags t JOIN photo_tags pt ON pt.tag_id = t.id JOIN photos ph ON ph.id = pt.photo_id JOIN projects p ON p.id = ph.project_id WHERE p.user_id = ? AND ph.user_id = p.user_id AND p.visibility = "public" AND ph.visibility = "public" GROUP BY t.id, t.name, t.tag_type ORDER BY use_count DESC, t.name LIMIT 20');
+  $stmt = db()->prepare('SELECT t.id, t.name, t.tag_type, t.user_id, t.team_id, t.border_color, t.background_color, tm.border_color AS team_border_color, tm.background_color AS team_background_color, COUNT(DISTINCT ph.id) AS use_count FROM tags t JOIN photo_tags pt ON pt.tag_id = t.id JOIN photos ph ON ph.id = pt.photo_id JOIN projects p ON p.id = ph.project_id LEFT JOIN teams tm ON tm.id = t.team_id WHERE p.user_id = ? AND ph.user_id = p.user_id AND p.visibility = "public" AND ph.visibility = "public" GROUP BY t.id, t.name, t.tag_type, t.user_id, t.team_id, t.border_color, t.background_color, tm.border_color, tm.background_color ORDER BY use_count DESC, t.name LIMIT 20');
   $stmt->execute([$userId]);
   $popularTags = $stmt->fetchAll();
   $stmt = db()->prepare('SELECT COUNT(*) FROM projects WHERE user_id = ? AND visibility = "public"');
