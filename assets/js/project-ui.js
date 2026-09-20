@@ -47,6 +47,7 @@ if (picker) {
     document.body.classList.add(`theme-${choice.value}`);
     document.body.style.setProperty('--profile-accent', choice.dataset.accent);
     document.body.style.setProperty('--profile-soft', choice.dataset.soft);
+    document.body.style.setProperty('--profile-secondary', choice.dataset.secondary || choice.dataset.accent);
   };
   const save = async () => {
     if (busy) return;

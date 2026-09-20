@@ -32,7 +32,7 @@ $pageTitle = $pageTitle ?? SERVICE_NAME;
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/sidebar-refresh.css?v=<?= (int) @filemtime(__DIR__ . '/../assets/css/sidebar-refresh.css') ?>">
   <link rel="stylesheet" href="<?= BASE_URL ?>/assets/css/project-refresh.css?v=<?= (int) @filemtime(__DIR__ . '/../assets/css/project-refresh.css') ?>">
 </head>
-<body class="<?= h($pageClass ?? '') ?> <?= $personalTheme ? 'personalTheme theme-' . h($personalThemeKey) : '' ?>" <?= $personalTheme ? 'style="--profile-accent:' . h($personalTheme['accent']) . ';--profile-soft:' . h($personalTheme['soft']) . ';"' : '' ?>>
+<body class="<?= h($pageClass ?? '') ?> <?= $personalTheme ? 'personalTheme theme-' . h($personalThemeKey) : '' ?>" <?= $personalTheme ? 'style="--profile-accent:' . h($personalTheme['accent']) . ';--profile-soft:' . h($personalTheme['soft']) . ';--profile-secondary:' . h($personalTheme['secondary']) . ';"' : '' ?>>
 <a class="skipLink" href="#mainContent">本文へスキップ</a>
 <div class="headerReveal">
 <header class="siteHeader">

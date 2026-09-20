@@ -3,31 +3,30 @@ declare(strict_types=1);
 
 /**
  * テーマカラーの変更はこの一覧に集約します。
- * 選択肢はホワイト、プロ野球12球団、パープル・ピンク・ダークモードの16種類です。
+ * 選択肢はホワイト、プロ野球12球団、パープル・ピンクの15種類です。
  */
 function profileThemes(): array
 {
   return [
-    'white' => ['name' => 'ホワイト', 'accent' => '#6f7c87', 'soft' => '#f7f9fa'],
-    'fighters' => ['name' => 'ファイターズ', 'accent' => '#1e3a8a', 'soft' => '#e8efff'],
-    'eagles' => ['name' => 'イーグルス', 'accent' => '#8b1e3f', 'soft' => '#f9e9ef'],
-    'marines' => ['name' => 'マリーンズ', 'accent' => '#1f4d8f', 'soft' => '#e8f0fc'],
-    'lions' => ['name' => 'ライオンズ', 'accent' => '#0b5ba7', 'soft' => '#e6f1ff'],
-    'buffaloes' => ['name' => 'バファローズ', 'accent' => '#8c6a16', 'soft' => '#fbf5df'],
-    'hawks' => ['name' => 'ホークス', 'accent' => '#9a7800', 'soft' => '#fff8d9'],
-    'swallows' => ['name' => 'スワローズ', 'accent' => '#2386a8', 'soft' => '#e5f6fb'],
-    'giants' => ['name' => 'ジャイアンツ', 'accent' => '#d86616', 'soft' => '#fff0e5'],
-    'baystars' => ['name' => 'ベイスターズ', 'accent' => '#005baa', 'soft' => '#e5f1ff'],
-    'dragons' => ['name' => 'ドラゴンズ', 'accent' => '#003d7c', 'soft' => '#e6eef9'],
-    'tigers' => ['name' => 'タイガース', 'accent' => '#8b7100', 'soft' => '#fff8d8'],
-    'carp' => ['name' => 'カープ', 'accent' => '#c9152b', 'soft' => '#ffe9ed'],
-    'purple' => ['name' => 'パープル', 'accent' => '#7852a9', 'soft' => '#f2ebfb'],
-    'pink' => ['name' => 'ピンク', 'accent' => '#c45d83', 'soft' => '#fcebf2'],
-    'dark' => ['name' => 'ダークモード', 'accent' => '#d7e2ee', 'soft' => '#1a222b'],
+    'white' => ['name' => 'ホワイト', 'accent' => '#6f7c87', 'soft' => '#f7f9fa', 'secondary' => '#d6dce2'],
+    'fighters' => ['name' => 'ファイターズ', 'accent' => '#275b91', 'soft' => '#e9f1fb', 'secondary' => '#111111'],
+    'eagles' => ['name' => 'イーグルス', 'accent' => '#7c1718', 'soft' => '#f9e9e9', 'secondary' => '#e9a93e'],
+    'marines' => ['name' => 'マリーンズ', 'accent' => '#4a4a4a', 'soft' => '#efefef', 'secondary' => '#000000'],
+    'lions' => ['name' => 'ライオンズ', 'accent' => '#092048', 'soft' => '#e8edf5', 'secondary' => '#9d1f18'],
+    'buffaloes' => ['name' => 'バファローズ', 'accent' => '#00011f', 'soft' => '#e9eaf5', 'secondary' => '#b3ab2d'],
+    'hawks' => ['name' => 'ホークス', 'accent' => '#171717', 'soft' => '#fff8d9', 'secondary' => '#f3c945'],
+    'swallows' => ['name' => 'スワローズ', 'accent' => '#001444', 'soft' => '#e9edf6', 'secondary' => '#e40028'],
+    'giants' => ['name' => 'ジャイアンツ', 'accent' => '#f27900', 'soft' => '#fff0e5', 'secondary' => '#000000'],
+    'baystars' => ['name' => 'ベイスターズ', 'accent' => '#19418a', 'soft' => '#e8f1fb', 'secondary' => '#3a83c7'],
+    'dragons' => ['name' => 'ドラゴンズ', 'accent' => '#17317d', 'soft' => '#e7eef9', 'secondary' => '#16b3eb'],
+    'tigers' => ['name' => 'タイガース', 'accent' => '#171717', 'soft' => '#fff8d8', 'secondary' => '#f7e14c'],
+    'carp' => ['name' => 'カープ', 'accent' => '#da3630', 'soft' => '#ffe9ed', 'secondary' => '#0e2950'],
+    'purple' => ['name' => 'パープル', 'accent' => '#7852a9', 'soft' => '#f2ebfb', 'secondary' => '#c5b2df'],
+    'pink' => ['name' => 'ピンク', 'accent' => '#c45d83', 'soft' => '#fcebf2', 'secondary' => '#e8adc3'],
   ];
 }
 
-/** 旧テーマキーを、新しい16種類のいずれかへ読み替えます。 */
+/** 旧テーマキーを、新しい15種類のいずれかへ読み替えます。 */
 function profileThemeAliases(): array
 {
   return [
@@ -41,6 +40,7 @@ function profileThemeAliases(): array
     'amber' => 'white',
     'slate' => 'white',
     'mono' => 'white',
+    'dark' => 'white',
   ];
 }
 

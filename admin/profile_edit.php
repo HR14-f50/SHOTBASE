@@ -235,7 +235,7 @@ $ownedTags = $stmt->fetchAll();
         <textarea id="editBio" name="bio" maxlength="200" rows="4" data-counter-target="editBioCount"><?= h($user['bio']) ?></textarea>
         <p class="textCounter"><span id="editBioCount">0</span> / 200文字</p>
         <fieldset class="signupFieldset themePicker" data-theme-picker="<?= BASE_URL ?>/admin/theme_update.php" data-saved-theme="<?= h($saved['theme_key']) ?>"><legend>テーマカラー（選ぶとすぐ保存されます）</legend>
-          <div class="themeSwatches"><?php foreach (profileThemes() as $key => $theme): ?><label title="<?= h($theme['name']) ?>"><input type="radio" name="theme_key" value="<?= h($key) ?>" data-accent="<?= h($theme['accent']) ?>" data-soft="<?= h($theme['soft']) ?>" <?= $user['theme_key'] === $key ? 'checked' : '' ?>><span style="background:<?= h($theme['accent']) ?>"></span><small><?= h($theme['name']) ?></small></label><?php endforeach; ?></div>
+          <div class="themeSwatches"><?php foreach (profileThemes() as $key => $theme): ?><label title="<?= h($theme['name']) ?>"><input type="radio" name="theme_key" value="<?= h($key) ?>" data-accent="<?= h($theme['accent']) ?>" data-soft="<?= h($theme['soft']) ?>" data-secondary="<?= h($theme['secondary']) ?>" <?= $user['theme_key'] === $key ? 'checked' : '' ?>><span style="background:<?= h($theme['accent']) ?>"></span><small><?= h($theme['name']) ?></small></label><?php endforeach; ?></div>
           <p class="accountHelp" data-theme-status role="status">プロフィール・プロジェクト・写真詳細にも反映します。</p>
         </fieldset>
       <?php endif; ?>
