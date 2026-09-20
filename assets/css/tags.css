@@ -234,6 +234,22 @@
 .tagPickerPlayerTeam[hidden] {
   display: none;
 }
+.tagPickerCategory[hidden] {
+  display: none;
+}
+.tagPickerStadiumGroups {
+  display: grid;
+  gap: 14px;
+}
+.tagPickerStadiumCategory {
+  display: grid;
+  gap: 8px;
+}
+.tagPickerStadiumCategory h4 {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-muted, #687582);
+}
 .tagUniformNumber {
   display: inline-flex;
   align-items: center;
@@ -252,6 +268,62 @@
 .tagCreateHeading {
   margin: 0 0 8px;
   font-size: 14px;
+}
+.tagManagementCard {
+  scroll-margin-top: 24px;
+}
+.tagManagementCreate {
+  margin: 16px 0 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--tag-border);
+}
+.tagManagementList {
+  display: grid;
+  gap: 10px;
+}
+.tagManagementRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--tag-border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .62);
+}
+.tagManagementEdit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.tagManagementEdit label {
+  flex: 1;
+  min-width: 0;
+}
+.tagManagementEdit input {
+  width: 100%;
+  min-height: 38px;
+}
+.tagManagementMeta {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  color: var(--text-muted, #687582);
+  font-size: 12px;
+  white-space: nowrap;
+}
+.tagManagementMeta form {
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .tagManagementRow {
+    grid-template-columns: 1fr;
+  }
+  .tagManagementMeta {
+    justify-content: space-between;
+  }
 }
 .popularTagList {
   display: flex;

@@ -4,6 +4,7 @@ document.querySelectorAll('[data-tag-search]').forEach((search) => {
   const list = section?.querySelector('[data-tag-list], .tagList, .tagCheckboxList, .projectTagList');
   const status = search.querySelector('[data-tag-search-status]');
   if (!input || !list) return;
+  const normalizeSearch = (value) => typeof value.normalize === 'function' ? value.normalize('NFKC') : value;
 
   const getItems = () => [...list.querySelectorAll('label')].map((label) => ({
     label,
@@ -11,11 +12,11 @@ document.querySelectorAll('[data-tag-search]').forEach((search) => {
   }));
 
   const apply = () => {
-    const query = input.value.trim().toLocaleLowerCase('ja-JP');
+    const query = normalizeSearch(input.value.trim()).toLocaleLowerCase('ja-JP');
     const items = getItems();
     let visible = 0;
     items.forEach(({ label, item }) => {
-      const text = `${label.textContent} ${label.dataset.tagReading || ''} ${label.dataset.tagNumber || ''}`.trim().toLocaleLowerCase('ja-JP');
+      const text = normalizeSearch(`${label.textContent} ${label.dataset.tagReading || ''} ${label.dataset.tagNumber || ''}`).trim().toLocaleLowerCase('ja-JP');
       const matched = !query || text.includes(query);
       item.hidden = !matched;
       if (matched) visible += 1;

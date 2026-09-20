@@ -10,7 +10,7 @@ function tagResponse(array $body, int $status = 200): never
 }
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') tagResponse(['error' => 'POSTで送信してください。'], 405);
 $userId = currentUserId();
-if (!$userId || currentUserType() !== 'photographer' || !profileCsrfValid()) tagResponse(['error' => 'ログイン状態を確認して、ページを再読み込みしてください。'], 403);
+if (!$userId || !profileCsrfValid()) tagResponse(['error' => 'ログイン状態を確認して、ページを再読み込みしてください。'], 403);
 $name = is_string($_POST['name'] ?? null) ? trim($_POST['name']) : '';
 try {
   $names = parseTagNames($name);

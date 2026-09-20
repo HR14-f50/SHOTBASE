@@ -26,6 +26,11 @@ $tagPickerCategoryLabels = [
   'coach' => '監督・コーチ',
   'other' => 'その他',
 ];
+$tagPickerStadiumLabels = [
+  'home' => '本拠地球場',
+  'farm' => 'ファーム球場',
+  'regional' => '地方球場',
+];
 $tagPickerSelectedTeamIds = [];
 foreach (array_merge($tagPickerGroups['team']['tags'], $tagPickerGroups['players']['tags']) as $tag) {
   if (in_array((int)$tag['id'], $tagPickerSelected, true) && !empty($tag['team_id'])) {
@@ -87,12 +92,23 @@ $renderTagChoice = static function (array $tag, array $extraAttributes = []) use
                       $rightGroup = $rightNumber === '' ? 2 : (mb_strlen($rightNumber) >= 3 ? 1 : 0);
                       return [$leftGroup, $leftNumber === '' ? PHP_INT_MAX : (int)$leftNumber, $left['name']] <=> [$rightGroup, $rightNumber === '' ? PHP_INT_MAX : (int)$rightNumber, $right['name']];
                     }); ?>
-                    <div class="tagPickerCategory">
+                    <div class="tagPickerCategory" data-player-category="<?= h($categoryKey) ?>">
                       <h5><?= h($categoryLabel) ?></h5>
                       <div class="tagList"><?php foreach ($categories[$categoryKey] as $tag) $renderTagChoice($tag); ?></div>
                     </div>
                   <?php endforeach; ?>
                 </section>
+              <?php endforeach; ?>
+            </div>
+          <?php elseif ($groupKey === 'stadium'): ?>
+            <?php $stadiumsByCategory = []; foreach ($group['tags'] as $tag) $stadiumsByCategory[(string)($tag['category'] ?? 'regional')][] = $tag; ?>
+            <div class="tagPickerStadiumGroups">
+              <?php foreach ($tagPickerStadiumLabels as $categoryKey => $categoryLabel): ?>
+                <?php if (empty($stadiumsByCategory[$categoryKey])) continue; ?>
+                <div class="tagPickerStadiumCategory" data-stadium-category="<?= h($categoryKey) ?>">
+                  <h4><?= h($categoryLabel) ?></h4>
+                  <div class="tagList"><?php foreach ($stadiumsByCategory[$categoryKey] as $tag) $renderTagChoice($tag); ?></div>
+                </div>
               <?php endforeach; ?>
             </div>
           <?php elseif ($groupKey !== 'team'): ?>

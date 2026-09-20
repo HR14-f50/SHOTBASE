@@ -21,6 +21,59 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!profileCsrfValid()) {
     $errors[] = 'ページを再読み込みしてから、もう一度保存してください。';
+  } elseif (($_POST['action'] ?? '') === 'tag_create_manage') {
+    $name = trim((string)($_POST['tag_name'] ?? ''));
+    if ($name === '' || mb_strlen($name) > 12 || preg_match('/[\x00-\x1F]/u', $name)) {
+      $errors[] = 'タグ名は制御文字を含まない1〜12文字で入力してください。';
+    } else {
+      $stmt = $pdo->prepare('SELECT id FROM tags WHERE name = ? AND user_id = ? LIMIT 1');
+      $stmt->execute([$name, $userId]);
+      $alreadyOwned = $stmt->fetchColumn();
+      $stmt = $pdo->prepare('SELECT id FROM tags WHERE name = ? AND user_id IS NULL LIMIT 1');
+      $stmt->execute([$name]);
+      $alreadyOperator = $stmt->fetchColumn();
+      if ($alreadyOwned || $alreadyOperator) {
+        $errors[] = '同じ名前のタグがすでにあります。';
+      } else {
+        $pdo->prepare('INSERT INTO tags (user_id, name, tag_type) VALUES (?, ?, "custom")')->execute([$userId, $name]);
+        flash('tag_management', 'タグを作成しました。');
+        redirect('admin/profile_edit.php#tag-management');
+      }
+    }
+  } elseif (($_POST['action'] ?? '') === 'tag_update_manage') {
+    $tagId = (int)($_POST['tag_id'] ?? 0);
+    $name = trim((string)($_POST['tag_name'] ?? ''));
+    if ($tagId <= 0 || $name === '' || mb_strlen($name) > 12 || preg_match('/[\x00-\x1F]/u', $name)) {
+      $errors[] = 'タグ名は制御文字を含まない1〜12文字で入力してください。';
+    } else {
+      $stmt = $pdo->prepare('SELECT id FROM tags WHERE id = ? AND user_id = ? AND tag_type = "custom"');
+      $stmt->execute([$tagId, $userId]);
+      if (!$stmt->fetchColumn()) {
+        $errors[] = '編集できるタグが見つかりません。';
+      } else {
+        $stmt = $pdo->prepare('SELECT id FROM tags WHERE name = ? AND id <> ? AND (user_id = ? OR user_id IS NULL) LIMIT 1');
+        $stmt->execute([$name, $tagId, $userId]);
+        if ($stmt->fetchColumn()) {
+          $errors[] = '同じ名前のタグがすでにあります。';
+        } else {
+          $pdo->prepare('UPDATE tags SET name = ? WHERE id = ? AND user_id = ? AND tag_type = "custom"')->execute([$name, $tagId, $userId]);
+          flash('tag_management', 'タグ名を変更しました。');
+          redirect('admin/profile_edit.php#tag-management');
+        }
+      }
+    }
+  } elseif (($_POST['action'] ?? '') === 'tag_delete_manage') {
+    $tagId = (int)($_POST['tag_id'] ?? 0);
+    $stmt = $pdo->prepare('SELECT id FROM tags WHERE id = ? AND user_id = ? AND tag_type = "custom"');
+    $stmt->execute([$tagId, $userId]);
+    if (!$stmt->fetchColumn()) {
+      $errors[] = '削除できるタグが見つかりません。';
+    } else {
+      // タグを削除すると、写真・プロジェクト・プロフィールに付けた同タグも一緒に外れます。
+      $pdo->prepare('DELETE FROM tags WHERE id = ? AND user_id = ? AND tag_type = "custom"')->execute([$tagId, $userId]);
+      flash('tag_management', 'タグと、そのタグの付与先を削除しました。');
+      redirect('admin/profile_edit.php#tag-management');
+    }
   } elseif (($_POST['action'] ?? '') === 'upgrade') {
     $pdo->prepare('UPDATE users SET user_type = "photographer" WHERE id = ? AND user_type = "viewer"')->execute([$userId]);
     flash('profile_saved', '写真投稿会員に変更しました。公開プロフィールが利用できます。');
@@ -123,6 +176,14 @@ $pageClass = 'accountPage';
 $themeUserId = $userId;
 require_once __DIR__ . '/../includes/header.php';
 $message = flash('profile_saved');
+$tagMessage = flash('tag_management');
+$stmt = $pdo->prepare('SELECT t.id, t.name, t.created_at,
+  (SELECT COUNT(*) FROM photo_tags pt JOIN photos ph ON ph.id = pt.photo_id WHERE pt.tag_id = t.id AND ph.user_id = ?) AS photo_use_count,
+  (SELECT COUNT(*) FROM project_default_tags pdt JOIN projects p ON p.id = pdt.project_id WHERE pdt.tag_id = t.id AND p.user_id = ?) AS project_use_count,
+  (SELECT COUNT(*) FROM user_profile_tags upt WHERE upt.tag_id = t.id AND upt.user_id = ?) AS profile_use_count
+  FROM tags t WHERE t.user_id = ? AND t.tag_type = "custom" ORDER BY t.name');
+$stmt->execute([$userId, $userId, $userId, $userId]);
+$ownedTags = $stmt->fetchAll();
 ?>
 <section class="settingsShell">
   <p class="eyebrow">YOUR PROFILE</p>
@@ -130,6 +191,7 @@ $message = flash('profile_saved');
   <p class="accountHelp">プロフィール編集 · <?= $photographer ? '写真投稿会員' : '閲覧限定会員' ?></p>
   <p><a class="textLink" href="<?= BASE_URL ?>/<?= h(accountHome()) ?>">← <?= $photographer ? 'マイプロフィール' : 'アカウント' ?>へ戻る</a></p>
   <?php if ($message): ?><p class="notice success" role="status"><?= h($message) ?></p><?php endif; ?>
+  <?php if ($tagMessage): ?><p class="notice success" role="status"><?= h($tagMessage) ?></p><?php endif; ?>
   <?php if ($errors): ?><div class="notice error" role="alert"><?php foreach ($errors as $error): ?><p><?= h($error) ?></p><?php endforeach; ?></div><?php endif; ?>
   <form method="post" enctype="multipart/form-data" class="formStack" data-settings-form>
     <input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>">
@@ -220,6 +282,36 @@ $message = flash('profile_saved');
     <?php endif; ?>
     <div class="settingsActions"><button class="button primary" type="submit" name="action" value="save">プロフィールを保存</button><a class="button" href="<?= BASE_URL ?>/admin/profile_edit.php">やり直す（元に戻す）</a></div>
   </form>
+  <section class="settingsCard tagManagementCard" id="tag-management">
+    <h2>自分で作ったタグを管理</h2>
+    <p class="accountHelp">ここで作ったタグは、あなたの写真・プロジェクト・プロフィールで使えます。名前を変更すると、すでに付けた場所にも反映されます。</p>
+    <form method="post" class="tagManagementCreate formStack">
+      <input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>">
+      <input type="hidden" name="action" value="tag_create_manage">
+      <label for="managedTagName">新しいタグ名</label>
+      <div class="inlineTagControls"><input id="managedTagName" name="tag_name" maxlength="12" required placeholder="例：球場グルメ"><button class="button" type="submit">タグを作成</button></div>
+      <p class="accountHelp">1〜12文字。運営タグと同じ名前は作成できません。</p>
+    </form>
+    <?php if (!$ownedTags): ?>
+      <p class="accountHelp">まだ作成したタグはありません。</p>
+    <?php else: ?>
+      <div class="tagManagementList">
+        <?php foreach ($ownedTags as $tag): ?>
+          <?php $useCount = (int)$tag['photo_use_count'] + (int)$tag['project_use_count'] + (int)$tag['profile_use_count']; ?>
+          <article class="tagManagementRow">
+            <form method="post" class="tagManagementEdit">
+              <input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>">
+              <input type="hidden" name="action" value="tag_update_manage">
+              <input type="hidden" name="tag_id" value="<?= (int)$tag['id'] ?>">
+              <label><span class="srOnly">タグ名</span><input name="tag_name" maxlength="12" required value="<?= h($tag['name']) ?>"></label>
+              <button class="button" type="submit">修正</button>
+            </form>
+            <div class="tagManagementMeta"><span><?= $useCount ? '使用中：' . $useCount . 'か所' : '未使用' ?></span><form method="post" data-confirm="「<?= h($tag['name']) ?>」と、そのタグを付けた写真・プロジェクト・プロフィール情報を削除しますか？この操作は取り消せません。"><input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>"><input type="hidden" name="action" value="tag_delete_manage"><input type="hidden" name="tag_id" value="<?= (int)$tag['id'] ?>"><button class="button danger" type="submit">削除</button></form></div>
+          </article>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
+  </section>
   <?php if (!$photographer): ?>
     <section class="settingsCard"><h2>写真を投稿してみませんか？</h2><p>変更すると、誰でもアクセスできる公開プロフィールが作成されます。</p><form method="post"><input type="hidden" name="csrf" value="<?= h(profileCsrfToken()) ?>"><button class="button" name="action" value="upgrade">写真投稿会員に変更する</button></form></section>
   <?php endif; ?>
@@ -227,4 +319,5 @@ $message = flash('profile_saved');
 </section>
 <script src="<?= BASE_URL ?>/assets/js/profile-settings.js?v=<?= (int) @filemtime(__DIR__ . '/../assets/js/profile-settings.js') ?>" defer></script>
 <script src="<?= BASE_URL ?>/assets/js/watermark-preview.js" defer></script>
+<script src="<?= BASE_URL ?>/assets/js/tag-create.js?v=<?= (int) @filemtime(__DIR__ . '/../assets/js/tag-create.js') ?>" defer></script>
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

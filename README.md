@@ -109,3 +109,4 @@
 ## 運営タグとタグ検索（2026-09-20）
 チーム・区分・大会・ファイターズ選手の初期タグは `migrations/20260920_operator_tags.sql`、選手のふりがなは `migrations/20260920_fighters_readings.sql`、所属チームと守備位置カテゴリは `migrations/20260920_fighters_categories.sql`、ファイターズの背番号は `migrations/20260920_fighters_uniform_numbers.sql`、マリーンズ選手は `migrations/20260920_marines_players.sql`、球場タグは `migrations/20260920_stadium_tags.sql` にまとめています。適用方法とチームカラー・リーグカラーの変更箇所は [運営タグガイド](docs/operator-tags.md) を参照してください。
 写真アップロード、写真編集、プロジェクト作成、一括タグ付与、プロフィール編集にはタグ検索欄があります。
+プロフィール設定の「自分で作ったタグを管理」から、ユーザー作成タグの作成・修正・削除ができます。選手検索は全角数字を半角として扱い、該当する守備位置カテゴリだけを表示します。球場タグは本拠地・ファーム・地方に分類しています。
