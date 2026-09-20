@@ -25,14 +25,29 @@ $tagPickerCategoryLabels = [
   'coach' => '監督・コーチ',
   'other' => 'その他',
 ];
-$renderTagChoice = static function (array $tag) use ($tagPickerInputName, $tagPickerLabelClass, $tagPickerSelected, $tagPickerDeleteUrl, $tagPickerCreatedIds, $tagPickerEditToken): void {
+$tagPickerSelectedTeamIds = [];
+foreach (array_merge($tagPickerGroups['team']['tags'], $tagPickerGroups['players']['tags']) as $tag) {
+  if (in_array((int)$tag['id'], $tagPickerSelected, true) && !empty($tag['team_id'])) {
+    $tagPickerSelectedTeamIds[] = (string)$tag['team_id'];
+  }
+}
+$tagPickerSelectedTeamIds = array_values(array_unique($tagPickerSelectedTeamIds));
+$renderTagChoice = static function (array $tag, array $extraAttributes = []) use ($tagPickerInputName, $tagPickerLabelClass, $tagPickerSelected, $tagPickerDeleteUrl, $tagPickerCreatedIds, $tagPickerEditToken): void {
   $tagId = (int)$tag['id'];
   $tagName = (string)$tag['name'];
+  $uniformNumber = trim((string)($tag['uniform_number'] ?? ''));
   $isDeletable = $tagPickerDeleteUrl !== '' && in_array($tagId, $tagPickerCreatedIds, true);
+  $attributes = ' data-tag-reading="' . h($tag['reading'] ?? '') . '"';
+  if ($uniformNumber !== '') $attributes .= ' data-tag-number="' . h($uniformNumber) . '"';
+  foreach ($extraAttributes as $attribute => $value) {
+    $attributes .= ' ' . h($attribute) . '="' . h((string)$value) . '"';
+  }
   echo '<span class="tagManageItem">';
-  echo '<label class="' . h($tagPickerLabelClass) . '" data-tag-reading="' . h($tag['reading'] ?? '') . '" style="' . h(profileTagStyle($tag)) . '">';
+  echo '<label class="' . h($tagPickerLabelClass) . '"' . $attributes . ' style="' . h(profileTagStyle($tag)) . '">';
   echo '<input type="checkbox" name="' . h($tagPickerInputName) . '" value="' . $tagId . '"' . (in_array($tagId, $tagPickerSelected, true) ? ' checked' : '') . '>'; 
-  echo '<span class="tag" style="' . h(profileTagStyle($tag)) . '">#' . h($tagName) . '</span></label>';
+  echo '<span class="tag" style="' . h(profileTagStyle($tag)) . '">#' . h($tagName);
+  if ($uniformNumber !== '') echo '<span class="tagUniformNumber">背番号 ' . h($uniformNumber) . '</span>';
+  echo '</span></label>';
   if ($isDeletable) {
     echo '<button type="button" class="tagDeleteButton" data-delete-tag="' . $tagId . '" data-tag-name="' . h($tagName) . '" aria-label="' . h($tagName) . 'を登録タグから削除">×</button>';
   }
@@ -47,19 +62,32 @@ $renderTagChoice = static function (array $tag) use ($tagPickerInputName, $tagPi
         <?php if (!$group['tags']) continue; ?>
         <section class="tagPickerGroup tagPickerGroup-<?= h($groupKey) ?>">
           <h3><?= h($group['label']) ?></h3>
+          <?php if ($groupKey === 'team'): ?>
+            <p class="tagPickerHint">チームを選ぶと、そのチームの選手一覧が表示されます。</p>
+            <div class="tagList tagPickerTeamList">
+              <?php foreach ($group['tags'] as $tag) $renderTagChoice($tag, ['data-team-filter' => (string)($tag['team_id'] ?? '')]); ?>
+            </div>
+          <?php elseif ($groupKey === 'players'): ?>
+            <p class="tagPickerHint" data-player-team-hint<?= $tagPickerSelectedTeamIds ? ' hidden' : '' ?>>先にチームを選択してください。</p>
+          <?php endif; ?>
           <?php if ($groupKey === 'players'): ?>
-            <?php $playersByTeam = []; foreach ($group['tags'] as $tag) $playersByTeam[$tag['team_name'] ?? '選手'][(string)($tag['category'] ?? 'other')][] = $tag; ?>
-            <?php foreach ($playersByTeam as $teamName => $categories): ?>
-              <h4><?= h($teamName) ?></h4>
-              <?php foreach ($tagPickerCategoryLabels as $categoryKey => $categoryLabel): ?>
-                <?php if (empty($categories[$categoryKey])) continue; ?>
-                <div class="tagPickerCategory">
-                  <h5><?= h($categoryLabel) ?></h5>
-                  <div class="tagList"><?php foreach ($categories[$categoryKey] as $tag) $renderTagChoice($tag); ?></div>
-                </div>
+            <?php $playersByTeam = []; foreach ($group['tags'] as $tag) $playersByTeam[(string)($tag['team_id'] ?? '')][(string)($tag['category'] ?? 'other')][] = $tag; ?>
+            <div class="tagPickerPlayerTeams" data-player-filter>
+              <?php foreach ($playersByTeam as $teamId => $categories): ?>
+                <?php $teamName = $categories[array_key_first($categories)][0]['team_name'] ?? '選手'; ?>
+                <section class="tagPickerPlayerTeam" data-player-team="<?= h($teamId) ?>"<?= in_array($teamId, $tagPickerSelectedTeamIds, true) ? '' : ' hidden' ?>>
+                  <h4><?= h($teamName) ?></h4>
+                  <?php foreach ($tagPickerCategoryLabels as $categoryKey => $categoryLabel): ?>
+                    <?php if (empty($categories[$categoryKey])) continue; ?>
+                    <div class="tagPickerCategory">
+                      <h5><?= h($categoryLabel) ?></h5>
+                      <div class="tagList"><?php foreach ($categories[$categoryKey] as $tag) $renderTagChoice($tag); ?></div>
+                    </div>
+                  <?php endforeach; ?>
+                </section>
               <?php endforeach; ?>
-            <?php endforeach; ?>
-          <?php else: ?>
+            </div>
+          <?php elseif ($groupKey !== 'team'): ?>
             <div class="tagList"><?php foreach ($group['tags'] as $tag) $renderTagChoice($tag); ?></div>
           <?php endif; ?>
         </section>

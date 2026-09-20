@@ -215,6 +215,35 @@
 .tagPickerGroup .tagList {
   align-items: stretch;
 }
+.tagPickerHint {
+  margin: 0;
+  color: var(--text-muted, #687582);
+  font-size: 12px;
+}
+.tagPickerTeamList {
+  align-items: stretch;
+}
+.tagPickerPlayerTeams {
+  display: grid;
+  gap: 14px;
+}
+.tagPickerPlayerTeam {
+  display: grid;
+  gap: 8px;
+}
+.tagPickerPlayerTeam[hidden] {
+  display: none;
+}
+.tagUniformNumber {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .65);
+  color: inherit;
+  font-size: 10px;
+  font-weight: 700;
+}
 .tagCreateArea {
   margin-top: 14px;
   padding-top: 12px;

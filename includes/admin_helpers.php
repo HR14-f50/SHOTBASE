@@ -19,7 +19,9 @@ function ownedProject(int $id, int $userId): array
 function availableTags(int $userId): array
 {
   $stmt = db()->prepare('
-    SELECT t.*, teams.name AS team_name
+    SELECT t.*, teams.name AS team_name,
+      teams.border_color AS team_border_color,
+      teams.background_color AS team_background_color
     FROM tags t
     LEFT JOIN teams ON teams.id = t.team_id
     WHERE t.user_id = ? OR t.user_id IS NULL

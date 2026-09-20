@@ -4,7 +4,7 @@
     type="search"
     id="tagSearchInput<?= h((string)($tagSearchId ?? '')) ?>"
     data-tag-search-input
-    placeholder="タグ名を入力"
+    placeholder="タグ名・ふりがな・背番号を入力"
     autocomplete="off"
     enterkeyhint="search"
   >
