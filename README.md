@@ -104,6 +104,6 @@
 最新のプロジェクト管理・タグ制限・テーマ仕様は [管理・検索更新ガイド](docs/project-refresh.md) を参照してください。
 
 ## 運営タグとタグ検索（2026-09-20）
-チーム・区分・大会・ホーム／ビジター・ファイターズ選手の初期タグは `migrations/20260920_operator_tags.sql`、選手のふりがなは `migrations/20260920_fighters_readings.sql`、所属チームと守備位置カテゴリは `migrations/20260920_fighters_categories.sql`、ファイターズの背番号は `migrations/20260920_fighters_uniform_numbers.sql`、マリーンズ選手は `migrations/20260920_marines_players.sql`、球場タグは `migrations/20260920_stadium_tags.sql` にまとめています。適用方法とチームカラー・リーグカラーの変更箇所は [運営タグガイド](docs/operator-tags.md) を参照してください。
+チーム・区分・大会・ホーム／ビジター・ファイターズ選手の初期タグは `migrations/20260920_operator_tags.sql`、選手のふりがなは `migrations/20260920_fighters_readings.sql`、所属チームと守備位置カテゴリは `migrations/20260920_fighters_categories.sql`、ファイターズの背番号は `migrations/20260920_fighters_uniform_numbers.sql`、マリーンズ選手は `migrations/20260920_marines_players.sql`、ライオンズ選手は `migrations/20260920_lions_players.sql`、球場タグは `migrations/20260920_stadium_tags.sql` にまとめています。適用方法とチームカラー・リーグカラーの変更箇所は [運営タグガイド](docs/operator-tags.md) を参照してください。
 写真アップロード、写真編集、プロジェクト作成、一括タグ付与にはタグ検索欄があります。
 プロフィール設定の「自分で作ったタグを管理」から、写真・プロジェクトで使うユーザー作成タグの作成・修正・削除ができます。プロフィール専用タグは使用しません。選手検索は全角数字を半角として扱い、該当する守備位置カテゴリだけを表示します。球場タグは本拠地・ファーム・地方に分類しています。
