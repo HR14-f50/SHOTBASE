@@ -81,6 +81,7 @@ require __DIR__ . '/../includes/header.php';
           $tagPickerLabelClass = 'tagChoice';
           require __DIR__ . '/../includes/tag_picker.php';
         ?>
+        <?php $tagInputName = 'bulk_tags[]'; require __DIR__ . '/../includes/tag_create_ui.php'; ?>
         <div class="actionRow"><button class="button" type="button" data-select-photos>表示中の写真をすべて選択</button><button class="button primary" type="submit">選択した写真にタグを追加</button><span data-photo-selection role="status">0枚選択中</span></div>
       </details>
       <div class="managePhotoGrid">
