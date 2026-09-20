@@ -51,6 +51,8 @@ FROM (
   UNION ALL SELECT 'キャンプ', 'event'
   UNION ALL SELECT '自主トレ', 'event'
   UNION ALL SELECT 'みやざきフェニックスリーグ', 'event'
+  UNION ALL SELECT 'ホーム', 'custom'
+  UNION ALL SELECT 'ビジター', 'custom'
 ) src
 WHERE NOT EXISTS (SELECT 1 FROM tags existing WHERE existing.user_id IS NULL AND existing.name = src.name);
 

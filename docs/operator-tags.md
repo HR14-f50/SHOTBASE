@@ -1,6 +1,6 @@
 # 運営タグ
 
-運営側で用意するタグは `migrations/20260920_operator_tags.sql` にまとめています。MAMPの `shotbase` データベースへ一度適用すると、チーム・区分・大会・ファイターズ選手のタグが登録されます。選手のふりがなは `20260920_fighters_readings.sql`、所属チームと守備位置カテゴリ（投手・捕手・内野手・外野手・監督コーチ）は `20260920_fighters_categories.sql`、ファイターズの背番号は `20260920_fighters_uniform_numbers.sql`、マリーンズの選手・背番号・ふりがなは `20260920_marines_players.sql`、球場タグは `20260920_stadium_tags.sql` で追加します。
+運営側で用意するタグは `migrations/20260920_operator_tags.sql` にまとめています。MAMPの `shotbase` データベースへ一度適用すると、チーム・区分・大会・ホーム／ビジター・ファイターズ選手のタグが登録されます。既存DBへホーム／ビジターだけを追加する場合は `20260920_home_visitor_tags.sql` を使います。選手のふりがなは `20260920_fighters_readings.sql`、所属チームと守備位置カテゴリ（投手・捕手・内野手・外野手・監督コーチ）は `20260920_fighters_categories.sql`、ファイターズの背番号は `20260920_fighters_uniform_numbers.sql`、マリーンズの選手・背番号・ふりがなは `20260920_marines_players.sql`、球場タグは `20260920_stadium_tags.sql` で追加します。
 
 接続情報は環境に合わせて設定し、パスワードをファイルへ書き込まないでください。接続例は次のように環境変数を使います。
 
