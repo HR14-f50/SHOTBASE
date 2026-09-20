@@ -188,9 +188,7 @@ $message = flash('profile_saved');
         $tagPickerLabelClass = 'profileTagChoice';
         require __DIR__ . '/../includes/tag_picker.php';
       ?>
-      <h3 class="tagCreateHeading">タグを作成する</h3>
-      <label>新しいタグ<input name="new_tags" value="<?= h($newTags) ?>" maxlength="1000" placeholder="例：球場巡り、ナイター"></label>
-      <p class="accountHelp">複数のタグは「、」または「,」で区切ってください。</p>
+      <?php $tagInputName = 'profile_tags[]'; require __DIR__ . '/../includes/tag_create_ui.php'; ?>
     </section>
     <?php if ($photographer): ?>
       <section class="settingsCard formStack">
